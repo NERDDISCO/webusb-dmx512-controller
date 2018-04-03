@@ -88,7 +88,7 @@ export default class WebUsbConnection {
 
     const buffer = Uint8Array.from(data)
 
-    this.log(`Send data to Arduino`, data)
+    //this.log(`Send data to Arduino`, data)
     // Send data to the USB device on endpoint 4
     return this.device.transferOut(4, buffer)
   }
