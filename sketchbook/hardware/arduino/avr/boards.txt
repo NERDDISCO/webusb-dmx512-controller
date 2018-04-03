@@ -1,0 +1,34 @@
+###################################################
+
+leonardoethwebusb.name=Arduino Leonardo ETH (WebUSB)
+leonardoethwebusb.vid.0=0x2a03
+leonardoethwebusb.pid.0=0x0040
+leonardoethwebusb.vid.1=0x2a03
+leonardoethwebusb.pid.1=0x8040
+
+leonardoethwebusb.upload.tool=avrdude
+leonardoethwebusb.upload.protocol=avr109
+leonardoethwebusb.upload.maximum_size=28672
+leonardoethwebusb.upload.maximum_data_size=2560
+leonardoethwebusb.upload.speed=57600
+leonardoethwebusb.upload.disable_flushing=true
+leonardoethwebusb.upload.use_1200bps_touch=true
+leonardoethwebusb.upload.wait_for_upload_port=true
+
+leonardoethwebusb.bootloader.tool=avrdude
+leonardoethwebusb.bootloader.low_fuses=0xff
+leonardoethwebusb.bootloader.high_fuses=0xd8
+leonardoethwebusb.bootloader.extended_fuses=0xcb
+leonardoethwebusb.bootloader.file=caterina/Caterina-LeonardoEthernet.hex
+leonardoethwebusb.bootloader.unlock_bits=0x3F
+leonardoethwebusb.bootloader.lock_bits=0x2F
+
+leonardoethwebusb.build.mcu=atmega32u4
+leonardoethwebusb.build.f_cpu=16000000L
+leonardoethwebusb.build.vid=0x2a03
+leonardoethwebusb.build.pid=0x8040
+leonardoethwebusb.build.usb_product="Arduino Leonardo ETH"
+leonardoethwebusb.build.board=AVR_LEONARDO_ETH
+leonardoethwebusb.build.core=arduino
+leonardoethwebusb.build.variant=leonardo
+leonardoethwebusb.build.extra_flags={build.usb_flags} "-DUSB_VERSION=0x210"
