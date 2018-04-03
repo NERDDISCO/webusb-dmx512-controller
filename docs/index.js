@@ -10,5 +10,5 @@ enableWebusb.addEventListener('click', e => {
 
 sendWebusb.addEventListener('click', e => {
   const buffer = Uint8Array.from([255, 255, 0])
-  webusbConnection.write(buffer)
+  webusbConnection.send(buffer)
 })
