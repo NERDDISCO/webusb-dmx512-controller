@@ -17,6 +17,7 @@ disconnectWebusb.addEventListener('click', e => {
 })
 
 sendWebusb.addEventListener('click', e => {
-  const buffer = Uint8Array.from([255, 255, 0])
+  // Flat PAR on Address 1: red, green, blue, uv, dimmer
+  const buffer = Uint8Array.from([255, 0, 0, 255, 255])
   webusbConnection.send(buffer)
 })
