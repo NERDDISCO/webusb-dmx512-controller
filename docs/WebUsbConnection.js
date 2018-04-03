@@ -11,7 +11,7 @@ export default class WebUsbConnection {
       { vendorId: 0x2a03, productId: 0x8040 }
     ]
 
-    this.log('Filters', filters)
+    this.log('Filters', JSON.stringify(filters))
 
     // Request access to the USB device
     navigator.usb.requestDevice({ filters })
