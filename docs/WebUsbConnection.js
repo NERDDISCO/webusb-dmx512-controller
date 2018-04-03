@@ -102,7 +102,7 @@ export default class WebUsbConnection {
   }
 
   log(message, data) {
-    const fullMessage = `${message}` + data + JSON.stringify(data) + `${data}`
+    const fullMessage = `${message}` + data + JSON.stringify(data) + `${data}` + [data]
 
     let elem = document.createElement('span')
     elem.innerHTML = fullMessage
