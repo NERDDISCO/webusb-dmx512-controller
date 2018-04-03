@@ -22,18 +22,18 @@ disconnectWebusb.addEventListener('click', e => {
 })
 
 red.addEventListener('click', e => {
-  // Flat PAR on Address 1: red, green, blue, uv, dimmer
-  webusbConnection.send([255, 0, 0, 255, 255])
+  // Flat PAR on Address 1: red, green, blue, uv, dimmer, strobe
+  webusbConnection.send([255, 0, 0, 255, 255, 0])
 })
 
 green.addEventListener('click', e => {
-  // Flat PAR on Address 1: red, green, blue, uv, dimmer
-  webusbConnection.send([0, 255, 0, 255, 255])
+  // Flat PAR on Address 1: red, green, blue, uv, dimmer, strobe
+  webusbConnection.send([0, 255, 0, 255, 255, 0])
 })
 
 blue.addEventListener('click', e => {
-  // Flat PAR on Address 1: red, green, blue, uv, dimmer
-  webusbConnection.send([0, 0, 255, 255, 255])
+  // Flat PAR on Address 1: red, green, blue, uv, dimmer, strobe
+  webusbConnection.send([0, 0, 255, 255, 255, 0])
 })
 
 strobe.addEventListener('click', e => {
