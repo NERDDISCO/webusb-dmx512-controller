@@ -90,9 +90,7 @@ export default class WebUsbConnection {
   }
 
   send(data) {
-    if (this.device === null) {
-      throw new Error(`device has not been enabled. Cannot write undefined`)
-    }
+    console.log('send data to Arduino :D')
 
     const buffer = Uint8Array.from(data)
 
@@ -107,7 +105,7 @@ export default class WebUsbConnection {
     if (data instanceof USBDevice) {
       const { productName, manufacturerName, configuration } = data
 
-      fullMessage = `${productName} ${manufacturerName} ${configuration.configurationName}`
+      fullMessage = `${message}: ${productName}`
     }
 
 
