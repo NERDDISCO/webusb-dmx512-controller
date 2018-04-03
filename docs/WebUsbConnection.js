@@ -11,22 +11,22 @@ export default class WebUsbConnection {
       { vendorId: 0x2a03, productId: 0x8040 }
     ]
 
-    this.log(`Filters: ${filters}`)
+    this.log('Filters', filters)
 
     // Request access to the USB device
     navigator.usb.requestDevice({ filters })
       // Open session to selected USB device
       .then(selectedDevice => {
-        this.log(`Selected device: ${selectedDevice}`)
+        this.log('Selected device', selectedDevice)
         this.device = selectedDevice
 
-        this.log(`Try to open connection to: ${selectedDevice.toString()}`)
+        this.log('Try to open connection to', selectedDevice)
         return this.device.open()
       })
 
       // Select #1 configuration if not automatially set by OS
       .then(() => {
-        this.log(`Try to select configuration to: ${this.device}`)
+        this.log('Try to select configuration to', this.device)
         if (this.device.configuration === null) {
           return this.device.selectConfiguration(1)
         }
@@ -37,7 +37,7 @@ export default class WebUsbConnection {
 
       // We are ready to receive data on Endpoint 1 of Interface #2
       .then(() => {
-        this.log(`Ready to receive data on Endpoint #1 of Interface #2: ${this.device}`)
+        this.log('Ready to receive data on Endpoint #1 of Interface #2', this.device)
 
         return this.device.controlTransferOut({
           'requestType': 'class',
@@ -54,20 +54,20 @@ export default class WebUsbConnection {
 
       .then(({ data }) => {
         let decoder = new TextDecoder()
-        this.log(`Received data from the Arduino: ${decoder.decode(data)}`)
+        this.log('Received data from the Arduino', decoder.decode(data))
       })
 
       .catch(error => {
-        this.log(`ERROR :( ${error}`)
+        this.log('ERROR', error)
       })
   }
 
   disconnect() {
     if (this.device === null) {
-      this.log(`ERROR :( Device has not been enabled. Cannot diconnect undefined`)
+      this.log('Device does not exist. Cannot diconnect undefined', {})
     }
 
-    this.log(`Disconnect from Arduino ${this.device}`)
+    this.log('Disconnect from Arduino', this.device)
     // Declare that we don't want to receive data anymore
     return this.device.controlTransferOut({
       'requestType': 'class',
@@ -77,7 +77,7 @@ export default class WebUsbConnection {
       'index': 0x02 // Interface: #2
     })
 
-    this.log(`Close ${this.device}`)
+    this.log('Close', this.device)
     .then(() => this.device.close())
   }
 
@@ -88,7 +88,7 @@ export default class WebUsbConnection {
 
     const buffer = Uint8Array.from(data)
 
-    this.log(`Send data to Arduino`, ${data})
+    this.log(`Send data to Arduino`, data)
     // Send data to the USB device on endpoint 4
     return this.device.transferOut(4, buffer)
   }
