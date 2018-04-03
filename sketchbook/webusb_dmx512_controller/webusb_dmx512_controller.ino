@@ -42,6 +42,9 @@ void loop() {
       // Set the value for each channel
       dmx_master.setChannelValue(i + 1, incoming[i]);
     }
+
+    Serial.write("Updated universe\r\n>");
+    Serial.flush();
   }
 }
 

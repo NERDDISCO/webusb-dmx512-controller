@@ -26,7 +26,7 @@ export default class WebUsbConnection {
 
       // Select #1 configuration if not automatially set by OS
       .then(() => {
-        this.log('Try to select configuration to', this.device)
+        this.log('Try to select configuration #1 for', this.device)
         if (this.device.configuration === null) {
           return this.device.selectConfiguration(1)
         }
@@ -48,18 +48,26 @@ export default class WebUsbConnection {
         })
       })
 
-
-      // Receive 512 bytes on Endpoint 5
-      .then(() => this.device.transferIn(5, 512))
-
-      .then(({ data }) => {
-        let decoder = new TextDecoder()
-        this.log('Received data from the Arduino', decoder.decode(data))
+      then(() => {
+        this.read()
       })
+  }
 
-      .catch(error => {
-        this.log('ERROR', error)
-      })
+  read() {
+    // Receive 512 bytes on Endpoint #5
+    this.device.transferIn(5, 512))
+
+    .then(({ data }) => {
+      let decoder = new TextDecoder()
+      this.log('Received data from the Arduino', decoder.decode(data))
+
+      this.read()
+    })
+
+    .catch(error => {
+      this.log('ERROR', error)
+    })
+
   }
 
   disconnect() {
