@@ -1,7 +1,7 @@
 #include <WebUSB.h>
 #include <Conceptinetics.h>
 
-WebUSB WebUSBSerial(1, "localhost:1337");
+WebUSB WebUSBSerial(1, "nerddisco.github.io/WebUSB-DMX512-Controller");
 #define Serial WebUSBSerial
 
 // Amount of DMX channels
