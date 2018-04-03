@@ -5,7 +5,10 @@ const devConsole = document.getElementById('console')
 const webusbConnection = new WebUsbConnection({ devConsole })
 const enableWebusb = document.getElementById('activateWebUsb')
 const disconnectWebusb = document.getElementById('disconnectWebUsb')
-const sendWebusb = document.getElementById('sendWebUsb')
+const red = document.getElementById('red')
+const green = document.getElementById('green')
+const blue = document.getElementById('blue')
+const strobe = document.getElementById('strobe')
 
 window.webusbConnection = webusbConnection
 
@@ -18,7 +21,22 @@ disconnectWebusb.addEventListener('click', e => {
   webusbConnection.disconnect()
 })
 
-sendWebusb.addEventListener('click', e => {
+red.addEventListener('click', e => {
   // Flat PAR on Address 1: red, green, blue, uv, dimmer
   webusbConnection.send([255, 0, 0, 255, 255])
+})
+
+green.addEventListener('click', e => {
+  // Flat PAR on Address 1: red, green, blue, uv, dimmer
+  webusbConnection.send([0, 255, 0, 255, 255])
+})
+
+blue.addEventListener('click', e => {
+  // Flat PAR on Address 1: red, green, blue, uv, dimmer
+  webusbConnection.send([0, 0, 255, 255, 255])
+})
+
+strobe.addEventListener('click', e => {
+  // Flat PAR on Address 1: red, green, blue, uv, dimmer, strobe
+  webusbConnection.send([255, 255, 255, 255, 255, 50])
 })
