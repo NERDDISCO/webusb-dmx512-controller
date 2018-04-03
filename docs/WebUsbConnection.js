@@ -17,16 +17,16 @@ export default class WebUsbConnection {
     navigator.usb.requestDevice({ filters })
       // Open session to selected USB device
       .then(selectedDevice => {
-        this.log(`Selected device: ${[selectedDevice]}`)
+        this.log(`Selected device: ${selectedDevice}`)
         this.device = selectedDevice
 
-        this.log(`Try to open connection to: ${selectedDevice.name}`)
+        this.log(`Try to open connection to: ${selectedDevice.toString()}`)
         return this.device.open()
       })
 
       // Select #1 configuration if not automatially set by OS
       .then(() => {
-        this.log(`Try to select configuration to: ${this.device.name}`)
+        this.log(`Try to select configuration to: ${this.device}`)
         if (this.device.configuration === null) {
           return this.device.selectConfiguration(1)
         }
@@ -88,13 +88,13 @@ export default class WebUsbConnection {
 
     const buffer = Uint8Array.from(data)
 
-    this.log(`Send data to Arduino ${data}`)
+    this.log(`Send data to Arduino`, ${data})
     // Send data to the USB device on endpoint 4
     return this.device.transferOut(4, buffer)
   }
 
-  log(message) {
-    const fullMessage = message
+  log(message, data) {
+    const fullMessage = `${message} ${JSON.stringify(data)}`
 
     let elem = document.createElement('span')
     elem.innerHTML = fullMessage
