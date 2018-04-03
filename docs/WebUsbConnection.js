@@ -55,7 +55,7 @@ export default class WebUsbConnection {
 
   read() {
     // Receive 512 bytes on Endpoint #5
-    this.device.transferIn(5, 512))
+    this.device.transferIn(5, 512)
 
     .then(({ data }) => {
       let decoder = new TextDecoder()
