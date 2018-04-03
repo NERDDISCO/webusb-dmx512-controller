@@ -2,17 +2,10 @@
 
 Do you want to build your own DMX512 controller? And use it directly in the browser by leveraging WebUSB? Then you come to the right place!
 
-
-* Sketch
-  * One with many prints
-  * One for "production"
-* WebUSB code for the browser
-* A way to use the code locally
-* Get the latest library from github/webusb/arduino
+1. Build your own [WebUSB DMX512 Controller](#hardware)
+2. [Open the demo page](https://nerddisco.github.io/WebUSB-DMX512-Controller)
 
 ---
-
-# How To create your own
 
 ![Arduino Leonardo with DMX512 shield attached](images/webusb_dmx512_controller.jpg)
 
@@ -227,3 +220,15 @@ navigator.usb.requestDevice({
 #### Chrome 63+
 
 * Native support for WebUSB
+
+
+---
+
+## Random
+
+* Sketch
+  * One with many prints
+  * One for "production"
+* WebUSB code for the browser
+* A way to use the code locally
+* Get the latest library from github/webusb/arduino
