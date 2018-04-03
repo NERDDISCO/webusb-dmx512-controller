@@ -104,7 +104,7 @@ export default class WebUsbConnection {
   log(message, data) {
     let fullMessage = `${message}` + productName
 
-    if (typeof data === 'object') {
+    if (data instanceof USBDevice) {
       const { productName, manufacturerName, configuration } = data
 
       fullMessage = `${productName} ${manufacturerName} ${configuration.configurationName}`
