@@ -20,5 +20,5 @@ disconnectWebusb.addEventListener('click', e => {
 
 sendWebusb.addEventListener('click', e => {
   // Flat PAR on Address 1: red, green, blue, uv, dimmer
-  webusbConnection.send(data)
+  webusbConnection.send([255, 0, 0, 255, 255])
 })
