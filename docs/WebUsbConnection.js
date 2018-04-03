@@ -92,12 +92,12 @@ export default class WebUsbConnection {
   }
 
   log(message) {
-    const staticMessage = `WebUSB: ${message}`
+    const fullMessage = JSON.stringify(message)
 
     let elem = document.createElement('span')
-    elem.innerHTML = message
+    elem.innerHTML = fullMessage
 
-    console.log(staticMessage)
+    console.log(fullMessage)
     this.devConsole.appendChild(elem)
   }
 
