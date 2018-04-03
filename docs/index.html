@@ -5,7 +5,7 @@
     <style>
       body {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         font: 1em sans-serif;
         margin: 0;
       }
@@ -16,8 +16,13 @@
         padding: .15em;
       }
 
+      .column {
+        display: flex;
+        flex-direction: column;
+      }
+
       .button {
-        width: 100vw;
+        width: 20vw;
         height: 10vh;
         font-size: 1em;
       }
@@ -30,12 +35,16 @@
   </head>
   <body>
 
-    <button id="activateWebUsb" class="button">Activate WebUSB</button>
-    <button id="disconnectWebUsb" class="button">Disconnect WebUsb</button>
-    <button id="red" class="button">Send: { color: red }</button>
-    <button id="green" class="button">Send: { color: green }</button>
-    <button id="blue" class="button">Send: { color: blue }</button>
-    <button id="strobe" class="button">Send: { color: white, strobe }</button>
+    <div class="column">
+      <button id="activateWebUsb" class="button">Activate WebUSB</button>
+      <button id="disconnectWebUsb" class="button">Disconnect WebUsb</button>
+    </div>
+    <div class="column">
+      <button id="red" class="button">Send: { color: red }</button>
+      <button id="green" class="button">Send: { color: green }</button>
+      <button id="blue" class="button">Send: { color: blue }</button>
+      <button id="strobe" class="button">Send: { color: white, strobe }</button>
+    </div>
 
     <div id="console"></div>
 
