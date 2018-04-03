@@ -4,6 +4,7 @@
     <title>WebUSB DMX512 Controller</title>
     <style>
       body {
+        display: flex;
         font: 3em sans-serif;
       }
       span {
@@ -12,12 +13,13 @@
         display: block;
       }
 
-      #container {
-        display: flex;
-      }
-
       #activateWebUsb, #sendWebUsb {
         width: 50vw;
+        height: 50vh;
+      }
+
+      #console {
+        width: 100vw;
         height: 50vh;
       }
     </style>
@@ -26,6 +28,8 @@
 
     <button id="activateWebUsb">Activate WebUSB</button>
     <button id="sendWebUsb">Send WebUSB</button>
+
+    <div id="console"></div>
 
   </body>
 
