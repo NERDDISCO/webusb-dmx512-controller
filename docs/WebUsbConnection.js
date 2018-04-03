@@ -17,7 +17,7 @@ export default class WebUsbConnection {
     navigator.usb.requestDevice({ filters })
       // Open session to selected USB device
       .then(selectedDevice => {
-        this.log(`Selected device: ${[selectedDevice)]}`)
+        this.log(`Selected device: ${[selectedDevice]}`)
         this.device = selectedDevice
 
         this.log(`Try to open connection to: ${selectedDevice.name}`)
