@@ -48,7 +48,7 @@ export default class WebUsbConnection {
         })
       })
 
-      then(() => {
+      .then(() => {
         this.read()
       })
   }
