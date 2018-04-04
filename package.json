@@ -1,0 +1,24 @@
+{
+  "name": "WebUSB-DMX512-Controller",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "Tim Pietrusky",
+  "license": "MIT",
+  "flat": true,
+  "bugs": {
+    "url": "https://github.com/NERDDISCO/WebUSB-DMX512-Controller/issues"
+  },
+  "scripts": {
+    "start": "node node_modules/http-server/bin/http-server ./docs -p 3337"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NERDDISCO/WebUSB-DMX512-Controller.git"
+  },
+  "dependencies": {},
+  "homepage": "https://github.com/NERDDISCO/WebUSB-DMX512-Controller#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}

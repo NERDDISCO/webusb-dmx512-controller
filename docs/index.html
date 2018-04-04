@@ -28,8 +28,14 @@
       }
 
       #console {
-        width: 100vw;
+        width: 60vw;
         height: 80vh;
+      }
+
+      h3 {
+        margin: 0;
+        padding: .15em;
+        background: #ccc;
       }
     </style>
   </head>
@@ -39,6 +45,7 @@
       <button id="activateWebUsb" class="button">Activate WebUSB</button>
       <button id="disconnectWebUsb" class="button">Disconnect WebUsb</button>
     </div>
+
     <div class="column">
       <button id="red" class="button">Send: { color: red }</button>
       <button id="green" class="button">Send: { color: green }</button>
@@ -46,7 +53,10 @@
       <button id="strobe" class="button">Send: { color: white, strobe }</button>
     </div>
 
-    <div id="console"></div>
+    <div class="column">
+      <h3>Development Console</h3>
+      <div id="console"></div>
+    </div>
 
   </body>
 

@@ -1,9 +1,10 @@
 # WebUSB DMX512 Controller
 
-Do you want to build your own DMX512 controller? And use it directly in the browser by leveraging WebUSB? Then you come to the right place!
+Do you want to build your own DMX512 controller? And use it directly in the browser by leveraging WebUSB? Then you should follow these steps:
 
 1. Build your own [WebUSB DMX512 Controller](#hardware)
-2. [Open the demo page](https://nerddisco.github.io/WebUSB-DMX512-Controller)
+2. Connect it via USB to your computer
+3. [Open the demo page](https://nerddisco.github.io/WebUSB-DMX512-Controller) and start interacting with the controller
 
 ---
 
@@ -20,7 +21,7 @@ Do you want to build your own DMX512 controller? And use it directly in the brow
 ### Arduino
 
 1. Clone this repository to your computer: `git clone git@github.com:NERDDISCO/WebUSB-DMX512-Controller.git`
-2. Download & install the [Arduino IDE](https://www.arduino.cc/en/Main/Software) >= 1.8.5, so you are able to write & push code onto the Arduino
+2. Download & install the [Arduino IDE](https://www.arduino.cc/en/Main/Software#download) >= 1.8.5, so you are able to write & push code onto the Arduino
 3. Open the Arduino IDE
 4. Open the preferences: *Arduino / Preferences*
 5. In the preferences dialog you have to change the *Sketchbook location* so that it points to the *sketchbook* folder that comes with the repository:
@@ -54,21 +55,38 @@ Global variables use 888 bytes (34%) of dynamic memory, leaving 1672 bytes for l
 
 
 
+#### Run the demo on your computer
+
+* Install the dev dependencies by executing `npm install` inside the repository
+* Execute `npm start`
+* Open the demo on [localhost:3337](http://localhost:3337)
+
+
+
+
+
+
 
 
 ---
 
 # In depth
 
+## Virtual WebUSB device
+
+You can open `chrome://usb-internals` in Google Chrome to add a virtual device to your browser.
+
+## Arduino  
+
 * [Coding reference](https://www.arduino.cc/en/Reference/HomePage)
 
-## Update the USB version in Arduino IDE
+### Update the USB version in Arduino IDE
 
 **Attention**: You don't need to do this if you are using the [sketchbook](sketchbook) as provided in this repository.
 
 * Upgrade the Arduino IDE from USB 2.0 to 2.1: Go into the installation directory of your Arduino IDE and open `hardware/arduino/avr/cores/arduino/USBCore.h`. Then find the line `#define USB_VERSION 0x200` and change `0x200` to `0x210`. (@see [Step 3](https://github.com/webusb/arduino#getting-started))
 
-## Using other boards
+### Using other boards
 
 1. Start the Arduino IDE
 2. [Find out which Arduino you are using or to which Arduino your microcontroller is compatible to](#which-arduino-do-i-have)
@@ -76,9 +94,11 @@ Global variables use 888 bytes (34%) of dynamic memory, leaving 1672 bytes for l
    1. Select the model: Tools -> Board
    2. Select the USB port: Tools -> Port
 
-## Which Arduino do I have?
 
-### Google Chrome
+
+### Which Arduino do I have?
+
+#### Using Google Chrome
 
 Chrome provides a build-in device-log `chrome://device-log` which can be used to identify the connected USB device:
 
@@ -93,7 +113,7 @@ Chrome provides a build-in device-log `chrome://device-log` which can be used to
 `vendor` & `product` can be [converted to hex](#convert-decimal-to-hex) in order to use them as a filter for WebUSB.
 
 
-### MacOS
+### Using MacOS
 
 * Connect the Arduino via USB to your computer
 * Execute the following command:
