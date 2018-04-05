@@ -4,6 +4,10 @@ export default class WebUsbConnection {
     this.devConsole = args.devConsole
   }
 
+  /*
+   * Enable WebUSB, which has to be triggered by a user gesture
+   * When the device was selected, try to create a connection to the device
+   */
   enable() {
     // Only request the port for specific devices
     const filters = [
@@ -17,32 +21,73 @@ export default class WebUsbConnection {
     navigator.usb.requestDevice({ filters })
       // Open session to selected USB device
       .then(selectedDevice => {
-        this.log('Selected device', selectedDevice, 'USBDevice')
         this.device = selectedDevice
 
-        this.log('Try to open connection to', selectedDevice, 'USBDevice')
+        console.log(selectedDevice)
+        this.log('---', '', 'string')
+        this.log('Selected device', selectedDevice.productName, 'USBDevice')
+
+        const { configuration, configurations, deviceClass, deviceProtocol,
+          deviceSubclass, deviceVersionMajor, deviceVersionMinor,
+          deviceVersionSubminor, manufacturerName, opened, productId,
+          productName, serialNumber, usbVersionMajor, usbVersionMinor,
+          usbVersionSubminor, vendorId } = selectedDevice
+
+        this.log('Opened', opened, 'keyvalue')
+        this.log('Vendor ID', vendorId, 'keyvalue')
+        this.log('Manufacturer Name', manufacturerName, 'keyvalue')
+        this.log('Product ID', productId, 'keyvalue')
+        this.log('Product Name', productName, 'keyvalue')
+        this.log('Serialnumber', serialNumber, 'keyvalue')
+
+        this.log('Device Class', deviceClass, 'keyvalue')
+        this.log('Device Protocol', deviceProtocol, 'keyvalue')
+        this.log('Device Subclass', deviceSubclass, 'keyvalue')
+        this.log('Device Version Major', deviceVersionMajor, 'keyvalue')
+        this.log('Device Version Minor', deviceVersionMinor, 'keyvalue')
+        this.log('Device Version Subminor', deviceVersionSubminor, 'keyvalue')
+
+        this.log('USB Version Major', usbVersionMajor, 'keyvalue')
+        this.log('USB Version Minor', usbVersionMinor, 'keyvalue')
+        this.log('USB Version Subminor', usbVersionSubminor, 'keyvalue')
+        this.log('---', '', 'string')
+
+        this.log('Try to open connection', selectedDevice.productName, 'USBDevice')
         return this.device.open()
       })
 
       // Select #1 configuration if not automatially set by OS
       .then(() => {
-        this.log('Try to select configuration #1 for', this.device, 'USBDevice')
+        this.log('Select configuration #1', this.device.configurations, 'USBDevice')
+
         if (this.device.configuration === null) {
           return this.device.selectConfiguration(1)
         }
       })
 
       // Get exclusive access to the #2 interface
-      .then(() => this.device.claimInterface(2))
+      .then(() => {
+        this.log('Claim interface #2', this.device.productName, 'USBDevice')
+
+        return this.device.claimInterface(2)
+      })
 
       // We are ready to receive data on Endpoint 1 of Interface #2
       .then(() => {
-        this.log('Ready to receive data on Endpoint #1 of Interface #2', this.device, 'USBDevice')
+        this.log('Ready to receive data on Endpoint #1 of Interface #2', this.device.productName, 'USBDevice')
 
         return this.device.controlTransferOut({
+          // It's a USB class request
           'requestType': 'class',
+          // The destination of this request is the interface
           'recipient': 'interface',
-          'request': 0x22,
+
+          // CDC: Communication Device Class
+          // CDC: SET_CONTROL_LINE_STATE
+          // RS-232 signal used to tell the USB device that the computer is now present.
+          // https://cscott.net/usb_dev/data/devclass/usbcdc10.pdf
+          'request': 0x22, // CDC:
+
           'value': 0x01, // Endpoint: 1
           'index': 0x02 // Interface: #2
         })
@@ -73,13 +118,16 @@ export default class WebUsbConnection {
     })
   }
 
+  /*
+   * Disconnect from the USB device
+   */
   disconnect() {
     if (this.device === null) {
       this.log('No connection to USB device, cannot use "disconnect"', '', 'string')
       return
     }
 
-    this.log('Disconnect from Arduino on Interface #2 using Endpoint 0', this.device, 'USBDevice')
+    this.log('Disconnect from Arduino on Interface #2 using Endpoint 0', this.device.productName, 'USBDevice')
 
     // Declare that we don't want to receive data anymore
     return this.device.controlTransferOut({
@@ -92,6 +140,9 @@ export default class WebUsbConnection {
     .then(() => this.device.close())
   }
 
+  /*
+   * Send data to the USB device
+   */
   send(data) {
     if (this.device === null) {
       this.log('No connection to USB device, cannot use "send"', '', 'string')
@@ -107,36 +158,48 @@ export default class WebUsbConnection {
     this.log('Send data to Arduino on Endpoint #4:', data, 'array')
 
     // Send data to the USB device on Endpoint #4
-    return this.device.transferOut(4, buffer)
+    return
+      this.device.transferOut(4, buffer)
+      .catch(error => {
+        this.log('Error:', error, 'string')
+      })
   }
 
+  /*
+   * Helper method to log messages into the "browser console"
+   * and into the "development console" defined in index.html
+   */
   log(message, data, type) {
     // console.log(typeof data, ' | ', data)
 
     let fullMessage = ''
 
     switch (type) {
-      case 'USBDevice': {
-        const { productName, manufacturerName, configuration } = data
-        fullMessage = `${message}: ${productName}`
-        console.log(data)
+      case 'USBDevice':
+        fullMessage = `${message}: ${data}`
         break
-      }
 
       case 'array':
         fullMessage = message + ' ' + JSON.stringify(data)
         break
 
+      case 'keyvalue':
+        fullMessage = `${message}: ${data}`
+        break
+
       default:
         fullMessage = message + ' ' + data
-
     }
 
     let elem = document.createElement('span')
     elem.innerHTML = fullMessage
 
     console.log(fullMessage)
-    this.devConsole.appendChild(elem)
+
+    if (this.devConsole !== undefined) {
+      this.devConsole.appendChild(elem)
+    }
+
   }
 
 }

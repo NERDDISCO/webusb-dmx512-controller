@@ -13,7 +13,7 @@ Do you want to build your own DMX512 controller? And use it directly in the brow
 ## Hardware
 
 * 1 x [Arduino Leonardo](https://store.arduino.cc/arduino-leonardo-with-headers) / Arduino Leonardo ETH (because it has the [ATmega32u4](http://www.microchip.com/wwwproducts/en/ATmega32U4) chip which makes it possible for the computer to recognize the Arduino as an external USB device)
-* 1 x ["2.5kV Isolated DMX512 Shield for Arduino - R2"](https://www.tindie.com/products/Conceptinetics/25kv-isolated-dmx-512-shield-for-arduino-r2/)
+* 1 x [2.5kV Isolated DMX512 Shield for Arduino - R2](https://www.tindie.com/products/Conceptinetics/25kv-isolated-dmx-512-shield-for-arduino-r2/)
 
 
 ## Software
@@ -28,8 +28,8 @@ Do you want to build your own DMX512 controller? And use it directly in the brow
   ![Arduino IDE: Change sketchbook location](images/arduino_ide_preferences_sketchbook_location.png)
 6. Close the Arduino IDE and then open it again (this is needed to load the new sketchbook that we selected in the step before)
 7. Now we need to configure the Arduino IDE so that it can recognize our Arduino Leonardo:
-  1. Select the model: *Tools / Board / Arduino Leonardo (WebUSB)*
-  2. Select the USB port: *Tools / Port / /dev/tty.usbmodemWUAR1* (This should be something with *usb* in the name and can be different on your computer.
+   1. Select the model: *Tools / Board / Arduino Leonardo (WebUSB)*
+   2. Select the USB port: *Tools / Port / /dev/tty.usbmodemWUAR1* (This should be something with *usb* in the name and can be different on your computer.
 
     Note: This can only be selected if your Arduino Leonardo is attached to your computer!)
 8. Open the sketch (if it's not already open): *File / Sketchbook / webusb_dmx512_controller*

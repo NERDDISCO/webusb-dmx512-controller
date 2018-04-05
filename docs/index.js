@@ -3,6 +3,8 @@ import WebUsbConnection from './WebUsbConnection.js'
 const devConsole = document.getElementById('console')
 
 const webusbConnection = new WebUsbConnection({ devConsole })
+window.webusbConnection = webusbConnection
+
 const enableWebusb = document.getElementById('activateWebUsb')
 const disconnectWebusb = document.getElementById('disconnectWebUsb')
 const red = document.getElementById('red')
@@ -10,7 +12,7 @@ const green = document.getElementById('green')
 const blue = document.getElementById('blue')
 const strobe = document.getElementById('strobe')
 
-window.webusbConnection = webusbConnection
+
 
 
 enableWebusb.addEventListener('click', e => {
