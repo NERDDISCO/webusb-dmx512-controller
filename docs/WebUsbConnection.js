@@ -12,7 +12,7 @@ export default class WebUsbConnection {
     // Only request the port for specific devices
     const filters = [
       // Arduino LLC (10755), Leonardo ETH (32832)
-      // { vendorId: 0x2a03, productId: 0x8040 }
+      { vendorId: 0x2a03, productId: 0x8040 }
     ]
 
     this.log('Filters', filters, 'array')
@@ -72,9 +72,9 @@ export default class WebUsbConnection {
         return this.device.claimInterface(2)
       })
 
-      // We are ready to receive data on Endpoint 1 of Interface #2
+      // Tell the USB device (Endpoint #1 of Interface #2) that we are ready to send data
       .then(() => {
-        this.log('Ready to receive data on Endpoint #1 of Interface #2', this.device.productName, 'USBDevice')
+        this.log('Tell the USB device (Endpoint #1 of Interface #2) that we are ready to send data', this.device.productName, 'USBDevice')
 
         return this.device.controlTransferOut({
           // It's a USB class request
@@ -83,12 +83,13 @@ export default class WebUsbConnection {
           'recipient': 'interface',
 
           // CDC: Communication Device Class
-          // CDC: SET_CONTROL_LINE_STATE
+          // 0x22: SET_CONTROL_LINE_STATE
           // RS-232 signal used to tell the USB device that the computer is now present.
           // https://cscott.net/usb_dev/data/devclass/usbcdc10.pdf
-          'request': 0x22, // CDC:
+          // -> 6.2.14 SetControlLineState on Page 49
+          'request': 0x22,
 
-          'value': 0x01, // Endpoint: 1
+          'value': 0x01, // Present
           'index': 0x02 // Interface: #2
         })
       })
@@ -109,12 +110,11 @@ export default class WebUsbConnection {
     .then(({ data }) => {
       let decoder = new TextDecoder()
       this.log('Received data from the Arduino', decoder.decode(data), 'string')
-
       this.read()
     })
 
     .catch(error => {
-      this.log('ERROR', error, 'string')
+      this.log('Error:', error, 'string')
     })
   }
 
@@ -134,7 +134,7 @@ export default class WebUsbConnection {
       'requestType': 'class',
       'recipient': 'interface',
       'request': 0x22,
-      'value': 0x00, // Endpoint: 0
+      'value': 0x00, // Not present1
       'index': 0x02 // Interface: #2
     })
     .then(() => this.device.close())
@@ -158,11 +158,7 @@ export default class WebUsbConnection {
     this.log('Send data to Arduino on Endpoint #4:', data, 'array')
 
     // Send data to the USB device on Endpoint #4
-    return
-      this.device.transferOut(4, buffer)
-      .catch(error => {
-        this.log('Error:', error, 'string')
-      })
+    return this.device.transferOut(4, buffer)
   }
 
   /*
