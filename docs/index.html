@@ -21,10 +21,11 @@
         flex-direction: column;
       }
 
-      .button {
+      .element {
         width: 20vw;
         height: 10vh;
         font-size: 1em;
+        position: sticky;
       }
 
       #console {
@@ -42,15 +43,14 @@
   <body>
 
     <div class="column">
-      <button id="activateWebUsb" class="button">Activate WebUSB</button>
-      <button id="disconnectWebUsb" class="button">Disconnect WebUsb</button>
+      <button id="activateWebUsb" class="element">Activate WebUSB</button>
+      <button id="disconnectWebUsb" class="element">Disconnect WebUsb</button>
     </div>
 
     <div class="column">
-      <button id="red" class="button">Send: { color: red }</button>
-      <button id="green" class="button">Send: { color: green }</button>
-      <button id="blue" class="button">Send: { color: blue }</button>
-      <button id="strobe" class="button">Send: { color: white, strobe }</button>
+      <input id="changeColor" type="color" class="element">
+      <input id="changeDimmer" type="range" value="0" min="0" max="255" class="element">
+      <input id="changeUv" type="range" value="0" min="0" max="255" class="element">
     </div>
 
     <div class="column">

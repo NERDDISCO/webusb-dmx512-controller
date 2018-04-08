@@ -51,17 +51,15 @@ Global variables use 888 bytes (34%) of dynamic memory, leaving 1672 bytes for l
 ### Browser
 
 1. Download and install [Google Chrome](https://www.google.com/chrome/) >= 63 (because it's the only browser with native WebUSB support)
-2. asdf
+2. [Open the demo page](https://nerddisco.github.io/WebUSB-DMX512-Controller) and start interacting with the WebUSB DMX512 Controller
 
-
+You can also run it locally.
 
 #### Run the demo on your computer
 
 * Install the dev dependencies by executing `npm install` inside the repository
 * Execute `npm start`
 * Open the demo on [localhost:3337](http://localhost:3337)
-
-
 
 
 
