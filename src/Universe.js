@@ -1,4 +1,4 @@
-export default class WebUsbDmx512Universe {
+export default class Universe {
   constructor(args) {
     this.universe = args.universe || new Array(512).fill(0)
   }

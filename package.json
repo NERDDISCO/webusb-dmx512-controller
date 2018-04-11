@@ -1,24 +1,58 @@
 {
-  "name": "WebUSB-DMX512-Controller",
-  "version": "1.0.0",
+  "name": "webusb-dmx512-controller",
+  "version": "0.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "jsnext:main": "src/index.js",
+  "unpkg": "",
   "author": "Tim Pietrusky",
   "license": "MIT",
   "flat": true,
   "bugs": {
-    "url": "https://github.com/NERDDISCO/WebUSB-DMX512-Controller/issues"
+    "url": "https://github.com/NERDDISCO/webusb-dmx512-controller/issues"
   },
   "scripts": {
-    "start": "node node_modules/http-server/bin/http-server ./docs -p 3337"
+    "start": "node node_modules/http-server/bin/http-server ./docs -p 3337",
+    "prepublish": "npm run build",
+    "build": "npm run build:commonjs",
+    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
+    "build:umd": "cross-env BABEL_ENV=umd babel src --out-dir dist"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NERDDISCO/WebUSB-DMX512-Controller.git"
+    "url": "git+https://github.com/NERDDISCO/webusb-dmx512-controller.git"
   },
   "dependencies": {},
-  "homepage": "https://github.com/NERDDISCO/WebUSB-DMX512-Controller#readme",
+  "homepage": "https://github.com/NERDDISCO/webusb-dmx512-controller#readme",
+  "files": [
+    "lib",
+    "src",
+    "dist"
+  ],
   "devDependencies": {
-    "http-server": "^0.11.1"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-umd": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.4",
+    "http-server": "^0.11.1",
+    "rimraf": "^2.6.2"
+  },
+  "resolutions": {
+    "minimist": "1.2.0",
+    "qs": "6.4.0",
+    "regenerator-runtime": "0.11.1",
+    "kind-of": "4.0.0",
+    "is-number": "3.0.0",
+    "assert-plus": "1.0.0",
+    "extsprintf": "1.4.0",
+    "jsesc": "1.3.0",
+    "rimraf": "2.6.2",
+    "commander": "2.15.1",
+    "source-map": "0.5.7",
+    "rollup-pluginutils": "2.0.1",
+    "estree-walker": "0.5.1",
+    "babel-plugin-transform-es2015-modules-umd": "6.24.1"
   }
 }

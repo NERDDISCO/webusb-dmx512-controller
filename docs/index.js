@@ -1,9 +1,9 @@
-import WebUsbDmx512Controller from './WebUsbDmx512Controller.js'
-import WebUsbDmx512Universe from './WebUsbDmx512Universe.js'
+import { Controller, Universe } from '/node_modules/WebUSB-DMX512-Controller/index.js'
+
 import DevConsole from './DevConsole.js'
 
-const controller = new WebUsbDmx512Controller({})
-const universe = new WebUsbDmx512Universe({})
+const controller = new Controller({})
+const universe = new Universe({})
 const devConsole = new DevConsole({})
 
 const enableWebusb = document.getElementById('activateWebUsb')

@@ -1,0 +1,36 @@
+{
+  "env": {
+    "commonjs": {
+      "presets": [
+        [
+          "env", {
+            "useBuiltIns": false
+          }
+        ]
+      ]
+    },
+
+    "umd": {
+      "presets": [
+        [
+          "env", {
+            "useBuiltIns": false,
+            "modules": false
+          }
+        ]
+      ],
+       "plugins": ["transform-es2015-modules-umd"]
+    },
+
+    "es": {
+      "presets": [
+        [
+          "env", {
+            "useBuiltIns": false,
+            "modules": false
+          }
+        ]
+      ]
+    }
+  }
+}

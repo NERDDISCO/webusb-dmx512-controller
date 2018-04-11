@@ -1,4 +1,4 @@
-export default class WebUsbDmx512Controller {
+export default class Controller {
   constructor(args) {
     // Reference to the selected USB device
     this.device = null
@@ -24,6 +24,9 @@ export default class WebUsbDmx512Controller {
     })
   }
 
+  /*
+   * Get a USB device that was already paired with the browser.
+   */
   getPairedDevice() {
     return navigator.usb.getDevices()
 
@@ -32,6 +35,9 @@ export default class WebUsbDmx512Controller {
     })
   }
 
+  /*
+   * Automatically connect to a USB device that was already paired.
+   */
   autoconnect() {
     return this.getPairedDevice().then((device) => {
       this.device = device
@@ -39,6 +45,9 @@ export default class WebUsbDmx512Controller {
     })
   }
 
+  /*
+   * Open a connection to the selected USB device
+   */
   connect() {
     // Open connection
     return this.device.open()

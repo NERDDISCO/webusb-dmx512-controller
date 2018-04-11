@@ -58,3 +58,7 @@ typings/
 .env
 
 .DS_Store
+dist
+lib
+es
+build
