@@ -1,57 +1,76 @@
 export default class WebUsbDmx512Controller {
   constructor(args) {
+    // Reference to the selected USB device
     this.device = null
+
+    // Only allow specific USB devices
+    this.filters = args.filters || [
+      // Arduino LLC (10755), Leonardo ETH (32832)
+      { vendorId: 0x2a03, productId: 0x8040 }
+    ]
   }
 
   /*
    * Enable WebUSB, which has to be triggered by a user gesture
-   * When the device was selected, try to create a connection to the device
+   *
+   * @return selectedDevice
    */
   enable() {
-    // Only request the port for specific devices
-    const filters = [
-      // Arduino LLC (10755), Leonardo ETH (32832)
-      { vendorId: 0x2a03, productId: 0x8040 }
-    ]
-
     // Request access to the USB device
-    navigator.usb.requestDevice({ filters })
-      // Open session to selected USB device
-      .then(selectedDevice => {
-        this.device = selectedDevice
+    return navigator.usb.requestDevice({ filters: this.filters })
 
-        // Open connection
-        return this.device.open()
+    .then(selectedDevice => {
+      this.device = selectedDevice
+    })
+  }
+
+  getPairedDevice() {
+    return navigator.usb.getDevices()
+
+    .then(devices => {
+      return devices[0]
+    })
+  }
+
+  autoconnect() {
+    return this.getPairedDevice().then((device) => {
+      this.device = device
+      return this.connect()
+    })
+  }
+
+  connect() {
+    // Open connection
+    return this.device.open()
+
+    // Select #1 configuration if not automatially set by OS
+    .then(() => {
+      if (this.device.configuration === null) {
+        return this.device.selectConfiguration(1)
+      }
+    })
+
+    // Get exclusive access to the #2 interface
+    .then(() => this.device.claimInterface(2))
+
+    // Tell the USB device that we are ready to send data
+    .then(() => this.device.controlTransferOut({
+        // It's a USB class request
+        'requestType': 'class',
+        // The destination of this request is the interface
+        'recipient': 'interface',
+        // CDC: Communication Device Class
+        // 0x22: SET_CONTROL_LINE_STATE
+        // RS-232 signal used to tell the USB device that the computer is now present.
+        'request': 0x22,
+        // Yes
+        'value': 0x01,
+        // Interface #2
+        'index': 0x02
       })
+    )
 
-      // Select #1 configuration if not automatially set by OS
-      .then(() => {
-        if (this.device.configuration === null) {
-          return this.device.selectConfiguration(1)
-        }
-      })
-
-      // Get exclusive access to the #2 interface
-      .then(() => this.device.claimInterface(2))
-
-      // Tell the USB device that we are ready to send data
-      .then(() => this.device.controlTransferOut({
-          // It's a USB class request
-          'requestType': 'class',
-          // The destination of this request is the interface
-          'recipient': 'interface',
-          // CDC: Communication Device Class
-          // 0x22: SET_CONTROL_LINE_STATE
-          // RS-232 signal used to tell the USB device that the computer is now present.
-          'request': 0x22,
-          // Yes
-          'value': 0x01,
-          // Interface #2
-          'index': 0x02
-        })
-      )
-
-      .catch(error => console.log(error))
+    .catch(error => console.log(error))
   }
 
   /*
@@ -74,20 +93,19 @@ export default class WebUsbDmx512Controller {
   disconnect() {
     // Declare that we don't want to receive data anymore
     return this.device.controlTransferOut({
-        // It's a USB class request
-        'requestType': 'class',
-        // The destination of this request is the interface
-        'recipient': 'interface',
-        // CDC: Communication Device Class
-        // 0x22: SET_CONTROL_LINE_STATE
-        // RS-232 signal used to tell the USB device that the computer is now present.
-        'request': 0x22,
-        // No
-        'value': 0x01,
-        // Interface #2
-        'index': 0x02
-      })
-    )
+      // It's a USB class request
+      'requestType': 'class',
+      // The destination of this request is the interface
+      'recipient': 'interface',
+      // CDC: Communication Device Class
+      // 0x22: SET_CONTROL_LINE_STATE
+      // RS-232 signal used to tell the USB device that the computer is now present.
+      'request': 0x22,
+      // No
+      'value': 0x01,
+      // Interface #2
+      'index': 0x02
+    })
 
     // Close the connection to the USB device
     .then(() => this.device.close())

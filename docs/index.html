@@ -3,12 +3,18 @@
   <head>
     <title>WebUSB DMX512 Controller</title>
     <style>
+      :root {
+        --space-start: 1em;
+        --space-end: 2em;
+      }
+
       body {
         display: flex;
         flex-direction: row;
         font: 1em sans-serif;
         margin: 0;
       }
+
       span {
         margin: 0 0 4px 0;
         border-bottom: 1px solid #ddd;
@@ -19,17 +25,30 @@
       .column {
         display: flex;
         flex-direction: column;
+        justify-content: start;
+        padding: .5em;
       }
 
       .element {
         width: 20vw;
-        height: 10vh;
         font-size: 1em;
         position: sticky;
       }
 
+      .full {
+        height: 10vh;
+      }
+
+      .start {
+        margin: 0 0 var(--space-start) 0;
+      }
+
+      .end {
+        margin: 0 0 var(--space-end) 0;
+      }
+
       #console {
-        width: 60vw;
+        width: 50vw;
         height: 80vh;
       }
 
@@ -43,18 +62,28 @@
   <body>
 
     <div class="column">
-      <button id="activateWebUsb" class="element">Activate WebUSB</button>
-      <button id="disconnectWebUsb" class="element">Disconnect WebUsb</button>
+      <button id="activateWebUsb" class="element full start">Activate</button>
+      <button id="disconnectWebUsb" class="element full">Disconnect</button>
     </div>
 
     <div class="column">
-      <input id="changeColor" type="color" class="element">
-      <input id="changeDimmer" type="range" value="0" min="0" max="255" class="element">
-      <input id="changeUv" type="range" value="0" min="0" max="255" class="element">
+      <h3 class="end">Flat PAR (6 Channels)</h3>
+
+      <label for="color" class="start">Color in RGB (Channel #1 + #2 + #3)</label>
+      <input id="changeColor" name="color" type="color" class="element full end">
+
+      <label for="uv" class="start">UV (Channel #4)</label>
+      <input id="changeUv" name="uv" type="range" value="0" min="0" max="255" class="element end">
+
+      <label for="dimmer" class="start">Dimmer (Channel #5)</label>
+      <input id="changeDimmer" name="dimmer" type="range" value="0" min="0" max="255" class="element end">
+
+      <label for="strobe" class="start">Strobe (Channel #6)</label>
+      <input id="changeStrobe" name="strobe" type="range" value="0" min="0" max="255" class="element">
     </div>
 
     <div class="column">
-      <h3>Development Console</h3>
+      <h3>WebUSB Console</h3>
       <div id="console"></div>
     </div>
 
