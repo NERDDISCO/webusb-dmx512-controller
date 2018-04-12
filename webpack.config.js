@@ -8,7 +8,8 @@ const DOCS = path.resolve(ROOT, "docs");
 
 module.exports = {
   entry: {
-    bundle: "./src/demo/index.js"
+    bundle: "./src/demo/index.js",
+    "webusb-dmx512-controller": "./src/lib/index.js"
   },
   output: {
     path: DOCS,
@@ -69,14 +70,17 @@ module.exports = {
     new FileManagerPlugin({
       onEnd: [
         {
-          copy: [
+          mkdir: [
+           './dist',
+          ],
+          move: [
             {
-              source: "./docs/bundle.js",
-              destination: "./dist/webusb-dmx512-controller.js" 
+              source: "./docs/webusb-dmx512-controller.js",
+              destination: "./dist/webusb-dmx512-controller.js"
             },
             {
-              source: "./docs/bundle.js.map",
-              destination: "./dist/bundle.js.map"
+              source: "./docs/webusb-dmx512-controller.js.map",
+              destination: "./dist/webusb-dmx512-controller.js.map"
             }
           ]
         }

@@ -1,6 +1,6 @@
 {
   "name": "webusb-dmx512-controller",
-  "version": "1.0.0-rc.1",
+  "version": "1.0.0-rc.2",
   "description": "Manage a DMX512 universe with an Arduino-based controller directly from the browser by leveraging WebUSB.",
   "main": "lib/index.js",
   "module": "src/lib/index.js",
@@ -16,7 +16,7 @@
     "start": "webpack-dev-server --hot",
     "testing": "node node_modules/http-server/bin/http-server ./testing -p 3337",
     "prepublish": "npm run build",
-    "clean": "rimraf lib dist",
+    "clean": "rimraf lib dist docs/*.js docs/*.map",
     "build": "npm run clean && npm run build:commonjs && npm run build:demo",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src/lib --out-dir lib",
     "build:demo": "cross-env NODE_ENV=production webpack"
