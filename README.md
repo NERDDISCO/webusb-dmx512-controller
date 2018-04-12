@@ -4,7 +4,7 @@ Do you want to build your own DMX512 controller? And use it directly in the brow
 
 1. Build your own [WebUSB DMX512 Controller](#hardware)
 2. Connect it via USB to your computer
-3. [Open the demo page](https://nerddisco.github.io/WebUSB-DMX512-Controller) and start interacting with the controller
+3. [Open the demo page](https://nerddisco.github.io/webusb-dmx512-controller) and start interacting with the controller
 
 ---
 
@@ -20,7 +20,7 @@ Do you want to build your own DMX512 controller? And use it directly in the brow
 
 ### Arduino
 
-1. Clone this repository to your computer: `git clone git@github.com:NERDDISCO/WebUSB-DMX512-Controller.git`
+1. Clone this repository to your computer: `git clone git@github.com:NERDDISCO/webusb-dmx512-controller.git`
 2. Download & install the [Arduino IDE](https://www.arduino.cc/en/Main/Software#download) >= 1.8.5, so you are able to write & push code onto the Arduino
 3. Open the Arduino IDE
 4. Open the preferences: *Arduino / Preferences*
@@ -51,7 +51,7 @@ Global variables use 888 bytes (34%) of dynamic memory, leaving 1672 bytes for l
 ### Browser
 
 1. Download and install [Google Chrome](https://www.google.com/chrome/) >= 63 (because it's the only browser with native WebUSB support)
-2. [Open the demo page](https://nerddisco.github.io/WebUSB-DMX512-Controller) and start interacting with the WebUSB DMX512 Controller
+2. [Open the demo page](https://nerddisco.github.io/webusb-dmx512-controller) and start interacting with the WebUSB DMX512 Controller
 
 You can also run it locally.
 
