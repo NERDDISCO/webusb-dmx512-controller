@@ -1,4 +1,5 @@
-import { Controller, Universe } from '/node_modules/WebUSB-DMX512-Controller/index.js'
+import Controller from '../lib/Controller.js'
+import Universe from '../lib/Universe.js'
 
 import DevConsole from './DevConsole.js'
 
