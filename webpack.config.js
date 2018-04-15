@@ -9,7 +9,7 @@ const DOCS = path.resolve(ROOT, "docs");
 module.exports = {
   entry: {
     bundle: "./demo/index.js",
-    "webusb-dmx512-controller": "./index.js"
+    "webusb-dmx512-controller": "./Controller.js"
   },
   output: {
     path: DOCS,

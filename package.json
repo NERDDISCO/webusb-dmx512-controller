@@ -2,9 +2,9 @@
   "name": "webusb-dmx512-controller",
   "version": "1.0.0-rc.5",
   "description": "Manage a DMX512 universe with an Arduino-based controller directly from the browser by leveraging WebUSB.",
-  "main": "index.js",
-  "module": "index.js",
-  "jsnext:main": "index.js",
+  "main": "Controller.js",
+  "module": "Controller.js",
+  "jsnext:main": "Controller.js",
   "unpkg": "umd/webusb-dmx512-controller.js",
   "scripts": {
     "start": "webpack-dev-server --hot",

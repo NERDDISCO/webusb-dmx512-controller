@@ -1,13 +1,12 @@
-import { Controller, Universe } from '../index.js'
+import Controller from '../Controller.js'
 
 import DevConsole from './DevConsole.js'
 
-const controller = new Controller({})
-const universe = new Universe({})
-const devConsole = new DevConsole({})
+const controller = new Controller()
+const devConsole = new DevConsole()
 
-const enableWebusb = document.getElementById('activateWebUsb')
-const disconnectWebusb = document.getElementById('disconnectWebUsb')
+const activateButton = document.getElementById('activateWebUsb')
+const disconnectButton = document.getElementById('disconnectWebUsb')
 const color = document.getElementById('changeColor')
 const dimmer = document.getElementById('changeDimmer')
 const uv = document.getElementById('changeUv')
@@ -44,42 +43,46 @@ const usbInfo = (device) => {
   devConsole.log('USB Version Major', usbVersionMajor, 'keyvalue')
   devConsole.log('USB Version Minor', usbVersionMinor, 'keyvalue')
   devConsole.log('USB Version Subminor', usbVersionSubminor, 'keyvalue')
-  devConsole.log('---', '', 'string')
 }
 
 
-// Automatically connect to paired device
-controller.autoconnect().then(() => {
+// Automatically connect to paired USB device
+controller.autoConnect()
+.then(() => {
+  devConsole.log('Found an already paired USB device', '', 'string')
   usbInfo(controller.device)
 })
+.catch((error) => {
+  devConsole.log('Found an already paired USB device', '', 'string')
+  devConsole.log(error, '', 'string')
+})
+
 
 // Select USB device and open a connection to it
-enableWebusb.addEventListener('click', e => {
+activateButton.addEventListener('click', e => {
+
+  // Enable WebUSB and select the Arduino
   controller.enable().then(() => {
 
+    // Create a connection to the selected Arduino
     controller.connect().then(() => {
+
+      // Successfully created a connection to the device
       usbInfo(controller.device)
     })
+  })
+  .catch(() => {
+    devConsole.log('No USB device was selected', '', 'string')
   })
 
 })
 
 // Disconnect from USB device
-disconnectWebusb.addEventListener('click', e => {
-  controller.disconnect()
+disconnectButton.addEventListener('click', e => {
+  controller.disconnect().then(() => {
+    devConsole.log('Destroyed connection to USB device, but USB device is still paired with the browser', '', 'string')
+  })
 })
-
-
-
-const update = (channel, value) => {
-   return universe.update(channel, value).then((channels) => {
-
-     devConsole.log('Universe:', channels, 'array')
-
-     // Send updated universe to controller
-     return controller.send(channels)
-   })
- }
 
 
  /*
@@ -105,11 +108,18 @@ color.addEventListener('change', e => {
   // Convert hex color to RGB
   let value = e.target.value.match(/[A-Za-z0-9]{2}/g).map(v => parseInt(v, 16))
 
+  devConsole.log('---', '', 'string')
   devConsole.log(`Set Color on Channel 1 - 3 to ${value}`, '', 'string')
 
   // Update starts at channel 1 and goes until channel 3
   // Why? We are sending an array with 3 values
-  update(1, value)
+  controller.updateUniverse(1, value)
+  .then(() => {
+    devConsole.log('Universe:', controller.universe, 'array')
+  })
+  .catch((error) => {
+    devConsole.log(error, '', 'string')
+  })
 })
 
 /*
@@ -119,10 +129,18 @@ color.addEventListener('change', e => {
 uv.addEventListener('change', e => {
   let value = parseInt(e.target.value, 10)
 
+  devConsole.log('---', '', 'string')
   devConsole.log(`Set UV on Channel 4 to ${value}`, '', 'string')
 
   // Update starts at channel 4
-  update(4, value)
+  controller.updateUniverse(4, value)
+  .then(() => {
+    devConsole.log('Universe:', controller.universe, 'array')
+  })
+  .catch((error) => {
+    devConsole.log(error, '', 'string')
+  })
+
 })
 
 /*
@@ -134,10 +152,17 @@ uv.addEventListener('change', e => {
 dimmer.addEventListener('change', e => {
   let value = parseInt(e.target.value, 10)
 
+  devConsole.log('---', '', 'string')
   devConsole.log(`Set Dimmer on Channel 5 to ${value}`, '', 'string')
 
   // Update starts at channel 5
-  update(5, value)
+  controller.updateUniverse(5, value)
+  .then(() => {
+    devConsole.log('Universe:', controller.universe, 'array')
+  })
+  .catch((error) => {
+    devConsole.log(error, '', 'string')
+  })
 })
 
 /*
@@ -149,8 +174,15 @@ dimmer.addEventListener('change', e => {
 strobe.addEventListener('change', e => {
   let value = parseInt(e.target.value, 10)
 
+  devConsole.log('---', '', 'string')
   devConsole.log(`Set Strobe on Channel 6 to ${value}`, '', 'string')
 
   // Update starts at channel 6
-  update(6, value)
+  controller.updateUniverse(6, value)
+  .then(() => {
+    devConsole.log('Universe:', controller.universe, 'array')
+  })
+  .catch((error) => {
+    devConsole.log(error, '', 'string')
+  })
 })

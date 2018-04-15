@@ -25,9 +25,14 @@ export default class DevConsole {
 
     console.log(fullMessage)
 
-    let elem = document.createElement('span')
-    elem.innerHTML = fullMessage
-    this.output.appendChild(elem)
+    // let elem = document.createElement('span')
+    // elem.innerHTML = fullMessage
+    // this.output.appendChild(elem)
+
+    this.output.value += fullMessage + '\n'
+
+    // Automatically scroll to the bottom
+    this.output.scrollTop = this.output.scrollHeight
   }
 
 }
