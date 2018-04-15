@@ -3,8 +3,8 @@
   "version": "1.0.0-rc.4",
   "description": "Manage a DMX512 universe with an Arduino-based controller directly from the browser by leveraging WebUSB.",
   "main": "index.js",
-  "module": "src/lib/index.js",
-  "jsnext:main": "src/lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "unpkg": "dist/webusb-dmx512-controller.js",
   "author": "Tim Pietrusky",
   "license": "MIT",
@@ -19,9 +19,8 @@
   },
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "testing": "node node_modules/http-server/bin/http-server ./testing -p 3337",
     "prepublish": "npm run build",
-    "clean": "rimraf lib dist docs/*.js docs/*.map",
+    "clean": "rimraf lib dist es docs/*.js docs/*.map",
     "build": "npm run clean && npm run build:commonjs && npm run build:umd",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src/lib --out-dir lib",
     "build:umd": "cross-env NODE_ENV=production webpack"
@@ -34,7 +33,7 @@
   "homepage": "https://github.com/NERDDISCO/webusb-dmx512-controller#readme",
   "files": [
     "lib",
-    "src/lib",
+    "es",
     "dist"
   ],
   "devDependencies": {

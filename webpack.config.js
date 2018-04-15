@@ -71,7 +71,7 @@ module.exports = {
       onEnd: [
         {
           mkdir: [
-           './dist',
+           './dist'
           ],
           move: [
             {
@@ -81,6 +81,12 @@ module.exports = {
             {
               source: "./docs/webusb-dmx512-controller.js.map",
               destination: "./dist/webusb-dmx512-controller.js.map"
+            }
+          ],
+          copy: [
+            {
+              source: "./src/lib/*.js",
+              destination: "./es",
             }
           ]
         }
