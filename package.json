@@ -1,28 +1,32 @@
 {
   "name": "webusb-dmx512-controller",
-  "version": "1.0.0-rc.4",
+  "version": "1.0.0-rc.5",
   "description": "Manage a DMX512 universe with an Arduino-based controller directly from the browser by leveraging WebUSB.",
   "main": "index.js",
-  "module": "es/index.js",
-  "jsnext:main": "es/index.js",
-  "unpkg": "dist/webusb-dmx512-controller.js",
+  "module": "index.js",
+  "jsnext:main": "index.js",
+  "unpkg": "umd/webusb-dmx512-controller.js",
+  "scripts": {
+    "start": "webpack-dev-server --hot",
+    "prepublish": "npm run build",
+    "clean": "rimraf umd docs/*.js docs/*.map",
+    "build": "npm run clean && npm run build:umd",
+    "build:umd": "cross-env NODE_ENV=production webpack"
+  },
   "author": "Tim Pietrusky",
   "license": "MIT",
   "keywords": [
     "webusb",
     "dmx512",
-    "arduino"
+    "dmx",
+    "arduino",
+    "lights",
+    "lighting",
+    "fixture"
   ],
   "flat": true,
   "bugs": {
     "url": "https://github.com/NERDDISCO/webusb-dmx512-controller/issues"
-  },
-  "scripts": {
-    "start": "webpack-dev-server --hot",
-    "prepublish": "npm run build",
-    "clean": "rimraf docs/*.js docs/*.map",
-    "build": "npm run clean && npm run build:commonjs && npm run build:umd",
-    "build:umd": "cross-env NODE_ENV=production webpack"
   },
   "repository": {
     "type": "git",
@@ -31,7 +35,10 @@
   "dependencies": {},
   "homepage": "https://github.com/NERDDISCO/webusb-dmx512-controller#readme",
   "files": [
-    "dist"
+    "umd",
+    "lib",
+    "index.js",
+    "Controller.js"
   ],
   "devDependencies": {
     "babel-cli": "^6.26.0",

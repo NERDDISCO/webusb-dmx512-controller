@@ -1,5 +1,4 @@
-import Controller from '../lib/Controller.js'
-import Universe from '../lib/Universe.js'
+import { Controller, Universe } from '../index.js'
 
 import DevConsole from './DevConsole.js'
 

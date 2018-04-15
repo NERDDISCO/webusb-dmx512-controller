@@ -8,7 +8,7 @@ const DOCS = path.resolve(ROOT, "docs");
 
 module.exports = {
   entry: {
-    bundle: "./src/demo/index.js",
+    bundle: "./demo/index.js",
     "webusb-dmx512-controller": "./index.js"
   },
   output: {
@@ -48,7 +48,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: "WebUSB DMX512 Controller - Demo",
       filename: "index.html",
-      template: "src/demo/index.html",
+      template: "demo/index.html",
       alwaysWriteToDisk: true,
       minify: {
         collapseWhitespace: false,

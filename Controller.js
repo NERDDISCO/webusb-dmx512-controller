@@ -1,7 +1,7 @@
 export default class Controller {
   constructor(args) {
     // Reference to the selected USB device
-    this.device = null
+    this.device = args.device || null
 
     // Only allow specific USB devices
     this.filters = args.filters || [

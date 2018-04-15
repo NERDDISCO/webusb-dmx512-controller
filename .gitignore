@@ -58,6 +58,6 @@ typings/
 .env
 
 .DS_Store
-dist
+umd
 build
 testing
