@@ -20,9 +20,8 @@
   "scripts": {
     "start": "webpack-dev-server --hot",
     "prepublish": "npm run build",
-    "clean": "rimraf lib dist es docs/*.js docs/*.map",
+    "clean": "rimraf docs/*.js docs/*.map",
     "build": "npm run clean && npm run build:commonjs && npm run build:umd",
-    "build:commonjs": "cross-env BABEL_ENV=commonjs babel src/lib --out-dir lib",
     "build:umd": "cross-env NODE_ENV=production webpack"
   },
   "repository": {
@@ -32,8 +31,6 @@
   "dependencies": {},
   "homepage": "https://github.com/NERDDISCO/webusb-dmx512-controller#readme",
   "files": [
-    "lib",
-    "es",
     "dist"
   ],
   "devDependencies": {

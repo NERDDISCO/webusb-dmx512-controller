@@ -9,7 +9,7 @@ const DOCS = path.resolve(ROOT, "docs");
 module.exports = {
   entry: {
     bundle: "./src/demo/index.js",
-    "webusb-dmx512-controller": "./src/lib/index.js"
+    "webusb-dmx512-controller": "./index.js"
   },
   output: {
     path: DOCS,
@@ -71,22 +71,16 @@ module.exports = {
       onEnd: [
         {
           mkdir: [
-           './dist'
+           './umd'
           ],
           move: [
             {
               source: "./docs/webusb-dmx512-controller.js",
-              destination: "./dist/webusb-dmx512-controller.js"
+              destination: "./umd/webusb-dmx512-controller.js"
             },
             {
               source: "./docs/webusb-dmx512-controller.js.map",
-              destination: "./dist/webusb-dmx512-controller.js.map"
-            }
-          ],
-          copy: [
-            {
-              source: "./src/lib/*.js",
-              destination: "./es",
+              destination: "./umd/webusb-dmx512-controller.js.map"
             }
           ]
         }

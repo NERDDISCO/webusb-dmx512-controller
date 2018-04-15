@@ -59,7 +59,5 @@ typings/
 
 .DS_Store
 dist
-/lib/
-es
 build
 testing
