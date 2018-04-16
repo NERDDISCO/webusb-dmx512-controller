@@ -7,5 +7,5 @@
 ## Versions
 <!-- List the version numbers -->
 
-1. Browser: x.x.x
+1. Browser: <!-- for example Chrome 65 -->
 2. webusb-dmx512-controller: x.x.x
