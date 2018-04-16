@@ -1,6 +1,6 @@
-import Controller from '../Controller.js'
+import Controller from '../controller.js'
 
-import DevConsole from './DevConsole.js'
+import DevConsole from './dev-console.js'
 
 const controller = new Controller()
 const devConsole = new DevConsole()
