@@ -24,7 +24,6 @@
     "lighting",
     "fixture"
   ],
-  "flat": true,
   "bugs": {
     "url": "https://github.com/NERDDISCO/webusb-dmx512-controller/issues"
   },
@@ -36,7 +35,6 @@
   "homepage": "https://github.com/NERDDISCO/webusb-dmx512-controller#readme",
   "files": [
     "umd",
-    "lib",
     "controller.js"
   ],
   "devDependencies": {
