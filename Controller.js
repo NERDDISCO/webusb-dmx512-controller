@@ -125,7 +125,6 @@ export default class Controller {
    * @returns {Promise}
    */
   send(data) {
-
     return new Promise((resolve, reject) => {
 
       // USB Device is not connected to the computer
@@ -188,7 +187,7 @@ export default class Controller {
       'recipient': 'interface',
       // CDC: Communication Device Class
       // 0x22: SET_CONTROL_LINE_STATE
-      // RS-232 signal used to tell the USB device that the computer is now present.
+      // RS-232 signal used to tell the USB device that the computer is not present anymore
       'request': 0x22,
       // No
       'value': 0x01,
