@@ -14,9 +14,23 @@ Do you want to build your own DMX512 controller? And use it directly in the brow
 
 ## Documentation
 
+### Browser Support
+
+In order to use the module you have to use a browser that supports WebUSB
+
+* Chrome 61 + 62: Behind flags chrome://flags/#enable-experimental-web-platform-features
+* Chrome 63+: Native support
+
+
 ### Using the controller with WebUSB
 
 TODO: Add a how to use the JS code
+
+### Run the demo on your computer
+
+* Install the dev dependencies by executing `npm install` inside the repository
+* Execute `npm start` to start the local web server
+* Open the demo on [localhost:8080](http://localhost:8080)
 
 ### Hardware list
 
