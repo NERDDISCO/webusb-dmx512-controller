@@ -7,13 +7,19 @@ const devConsole = new DevConsole()
 
 const activateButton = document.getElementById('activateWebUsb')
 const disconnectButton = document.getElementById('disconnectWebUsb')
+
+const setChannelForm = document.getElementById('updateAnyChannel')
+
+const logUniverseCheckbox = document.getElementById('logUniverse')
+let logUniverseEnabled = false
+
 const color = document.getElementById('changeColor')
 const dimmer = document.getElementById('changeDimmer')
 const uv = document.getElementById('changeUv')
 const strobe = document.getElementById('changeStrobe')
 
 /*
- * Basic information about the USB device
+ * Basic information about the USB device, used in the console
  */
 const usbInfo = (device) => {
   devConsole.log('---', '', 'string')
@@ -46,19 +52,17 @@ const usbInfo = (device) => {
 }
 
 
-// Automatically connect to paired USB device
-controller.autoConnect()
-.then(() => {
-  devConsole.log('Found an already paired USB device', '', 'string')
-  usbInfo(controller.device)
-})
-.catch((error) => {
-  devConsole.log('Found an already paired USB device', '', 'string')
-  devConsole.log(error, '', 'string')
-})
+
+// Log the content of the whole universe into the console
+const universeInfo = () => {
+  if (logUniverseEnabled) {
+    devConsole.log('', controller.universe, 'array')
+  }
+}
 
 
-// Select USB device and open a connection to it
+
+// Listen for click events on the activate button
 activateButton.addEventListener('click', e => {
 
   // Enable WebUSB and select the Arduino
@@ -77,6 +81,8 @@ activateButton.addEventListener('click', e => {
 
 })
 
+
+
 // Disconnect from USB device
 disconnectButton.addEventListener('click', e => {
   controller.disconnect().then(() => {
@@ -85,21 +91,67 @@ disconnectButton.addEventListener('click', e => {
 })
 
 
- /*
-  * ---
-  * Flat PAR
-  * ---
-  *
-  * Amount of channels: 6
-  * DMX512 Address in Universe: 1
-  *
-  * Channel #1: Red
-  * Channel #2: Green
-  * Channel #3: Blue
-  * Channel #4: UV
-  * Channel #5: Dimmer
-  * Channel #6: Strobe
-  */
+
+// Automatically connect to paired USB device
+controller.autoConnect()
+  .then(() => {
+    devConsole.log('Found an already paired USB device', '', 'string')
+    usbInfo(controller.device)
+  })
+  .catch((error) => {
+    devConsole.log('Found an already paired USB device', '', 'string')
+    devConsole.log(error, '', 'string')
+  })
+
+
+
+// Listen for submit events to change the value of a channel
+setChannelForm.addEventListener('submit', e => {
+  e.preventDefault()
+
+  // Get data out of form
+  const data = new FormData(setChannelForm)
+
+  // Parse the data into an Integer
+  const channel = parseInt(data.get('channel'), 10)
+  const value = parseInt(data.get('value'), 10)
+
+  devConsole.log('---', '', 'string')
+  devConsole.log(`Set Channel ${channel} to ${value}`, '', 'string')
+
+  // Update the universe
+  controller.updateUniverse(channel, value)
+  .then(() => {
+    universeInfo()
+  })
+  .catch((error) => {
+    devConsole.log(error, '', 'string')
+  })
+})
+
+
+
+// Listen for changes to enable / disable "log universe to console"
+logUniverseCheckbox.addEventListener('change', e => {
+  const { target } = e
+
+  logUniverseEnabled = target.checked
+})
+
+
+
+/*
+ * Fixture: Flat PAR with RGB LEDs
+ * Amount of channels: 6
+ * Address in Universe: 1
+ *
+ * Channel #1: Red
+ * Channel #2: Green
+ * Channel #3: Blue
+ * Channel #4: UV
+ * Channel #5: Dimmer
+ * Channel #6: Strobe
+ */
 
 /*
  * Color = Red, Green & Blue = 3 Channels
@@ -115,12 +167,14 @@ color.addEventListener('change', e => {
   // Why? We are sending an array with 3 values
   controller.updateUniverse(1, value)
   .then(() => {
-    devConsole.log('Universe:', controller.universe, 'array')
+    universeInfo()
   })
   .catch((error) => {
     devConsole.log(error, '', 'string')
   })
 })
+
+
 
 /*
  * UV = 1 Channel
@@ -135,13 +189,15 @@ uv.addEventListener('change', e => {
   // Update starts at channel 4
   controller.updateUniverse(4, value)
   .then(() => {
-    devConsole.log('Universe:', controller.universe, 'array')
+    universeInfo()
   })
   .catch((error) => {
     devConsole.log(error, '', 'string')
   })
 
 })
+
+
 
 /*
  * Dimmer = 1 Channel
@@ -158,12 +214,14 @@ dimmer.addEventListener('change', e => {
   // Update starts at channel 5
   controller.updateUniverse(5, value)
   .then(() => {
-    devConsole.log('Universe:', controller.universe, 'array')
+    universeInfo()
   })
   .catch((error) => {
     devConsole.log(error, '', 'string')
   })
 })
+
+
 
 /*
  * Strobe = 1 Channel
@@ -180,7 +238,7 @@ strobe.addEventListener('change', e => {
   // Update starts at channel 6
   controller.updateUniverse(6, value)
   .then(() => {
-    devConsole.log('Universe:', controller.universe, 'array')
+    universeInfo()
   })
   .catch((error) => {
     devConsole.log(error, '', 'string')

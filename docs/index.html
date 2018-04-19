@@ -4,35 +4,35 @@
     <title>WebUSB DMX512 Controller</title>
     <style>
       :root {
-        --space-start: 1em;
-        --space-end: 2em;
+        --space-start: .5em;
+        --space-end: 1em;
+        --space-around: .5em;
       }
 
       body {
-        display: flex;
-        flex-direction: row;
         font: 1em sans-serif;
         margin: 0;
       }
 
-      span {
-        margin: 0 0 4px 0;
-        border-bottom: 1px solid #ddd;
-        display: block;
-        padding: .15em;
+      .row {
+        display: flex;
+        flex-direction: row;
       }
 
       .column {
         display: flex;
         flex-direction: column;
         justify-content: start;
-        padding: .5em;
+        padding: var(--space-around);
+      }
+
+      .column > .column {
+        padding: 0;
       }
 
       .element {
-        width: 20vw;
+        width: 100%;
         font-size: 1em;
-        position: sticky;
       }
 
       .full {
@@ -48,9 +48,17 @@
       }
 
       #console {
-        width: 50vw;
-        height: 80vh;
-        font-size: 1em;
+        width: 60vw;
+        height: 55vh;
+        font: 1em monospace;
+        background: #2d323b;
+        color: #fff;
+        padding: var(--space-around);
+      }
+
+      h1 {
+        font-size: 1.7em;
+        margin: calc(var(--space-start) / 2) 0 0 0;
       }
 
       h3 {
@@ -58,34 +66,94 @@
         padding: .15em;
         background: #ddd;
       }
+
+      ul > li {
+        margin: 0 0 calc(var(--space-start) / 2) 0;
+      }
     </style>
   </head>
   <body>
 
     <div class="column">
-      <button id="activateWebUsb" class="element full start">Activate</button>
-      <button id="disconnectWebUsb" class="element full">Disconnect</button>
+      <h1>WebUSB DMX512 Controller: Demo</h1>
     </div>
 
-    <div class="column">
-      <h3 class="end">Flat PAR (6 Channels)</h3>
 
-      <label for="color" class="start">Color in RGB (Channel #1 + #2 + #3)</label>
-      <input id="changeColor" name="color" type="color" class="element full end">
 
-      <label for="uv" class="start">UV (Channel #4)</label>
-      <input id="changeUv" name="uv" type="range" value="0" min="0" max="255" class="element end">
+    <div class="row">
 
-      <label for="dimmer" class="start">Dimmer (Channel #5)</label>
-      <input id="changeDimmer" name="dimmer" type="range" value="0" min="0" max="255" class="element end">
+      <div class="column">
+        <button id="activateWebUsb" class="element full start">Activate</button>
+        <button id="disconnectWebUsb" class="element full">Disconnect</button>
+      </div>
 
-      <label for="strobe" class="start">Strobe (Channel #6)</label>
-      <input id="changeStrobe" name="strobe" type="range" value="0" min="0" max="255" class="element">
+
+
+      <div class="column">
+        <h3 class="start">Set Channel</h3>
+
+        <form id="updateAnyChannel" class="column">
+          <label for="channel" class="start">Channel</label>
+          <input id="changeChannel" name="channel" class="end" type="number" value="1" min="1" max="512">
+
+          <label for="value" class="start">Value</label>
+          <input id="changeValue" name="value" type="number" value="0" min="0" max="255" class="end">
+
+          <button type="submit" id="changeChannelValue" class="element end">Update</button>
+        </form>
+
+        <hr class="element end">
+
+        <h3>Example Fixture</h3>
+
+        <ul>
+          <li>Type: Flat PAR RGBUV</li>
+          <li>Amount of channels: 6</li>
+          <li>Address in Universe: 1</li>
+        </ul>
+
+        <label for="color" class="start">Color in RGB (Channel #1 - #3)</label>
+        <input id="changeColor" name="color" type="color" class="element full end">
+
+        <label for="uv" class="start">UV (Channel #4)</label>
+        <input id="changeUv" name="uv" type="range" value="0" min="0" max="255" class="element end">
+
+        <label for="dimmer" class="start">Dimmer (Channel #5)</label>
+        <input id="changeDimmer" name="dimmer" type="range" value="0" min="0" max="255" class="element end">
+
+        <label for="strobe" class="start">Strobe (Channel #6)</label>
+        <input id="changeStrobe" name="strobe" type="range" value="0" min="0" max="255" class="element">
+      </div>
+
+
+      <div class="column">
+        <h3 class="start">Console</h3>
+
+        <div class="row">
+          <label for="logUniverse" class="start">Log Universe</label>
+          <input id="logUniverse" name="logUniverse" type="checkbox">
+        </div>
+
+        <textarea id="console"></textarea>
+      </div>
+
     </div>
 
+
+
     <div class="column">
-      <h3>WebUSB DMX512 Console</h3>
-      <textarea id="console"></textarea>
+      <ul>
+        <li>
+          You have no idea what this is about? <a href="">Please read the article</a>
+        </li>
+        <li>
+          You need a <a href="https://github.com/NERDDISCO/webusb-dmx512-controller#browser-support">browser that supports ES6 modules + WebUSB</a> in order to use the demo
+        </li>
+        <li>
+          You can find the <a href="https://github.com/NERDDISCO/webusb-dmx512-controller">code on GitHub</a>
+        </li>
+      </ul>
+
     </div>
 
   <script type="text/javascript" src="bundle.js"></script><script type="text/javascript" src="webusb-dmx512-controller.js"></script></body>

@@ -12,7 +12,7 @@ export default class DevConsole {
         break
 
       case 'array':
-        fullMessage = message + ' ' + JSON.stringify(data)
+        fullMessage = message + JSON.stringify(data)
         break
 
       case 'keyvalue':
@@ -24,10 +24,6 @@ export default class DevConsole {
     }
 
     console.log(fullMessage)
-
-    // let elem = document.createElement('span')
-    // elem.innerHTML = fullMessage
-    // this.output.appendChild(elem)
 
     this.output.value += fullMessage + '\n'
 
