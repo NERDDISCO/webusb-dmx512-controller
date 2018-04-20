@@ -12,7 +12,7 @@
     "clean": "rimraf umd docs/*.js docs/*.map",
     "build": "npm run clean && npm run build:umd",
     "build:umd": "cross-env NODE_ENV=production webpack",
-    "jsdoc": "jsdoc2md --template README.hbs --files controller.js > README.md"
+    "jsdoc": "jsdoc2md --template .github/README.hbs --files controller.js > README.md"
   },
   "author": "Tim Pietrusky",
   "license": "MIT",
