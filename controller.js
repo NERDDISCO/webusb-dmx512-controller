@@ -28,15 +28,15 @@ export default class Controller {
    * @returns {Promise}
    *
    * @example
-   controller.enable().then(() => {
-     // Create a connection to the selected Arduino
-     controller.connect().then(() => {
-       // Successfully created a connection
-     })
-   })
-   .catch(() => {
-     // No Arduino was selected by the user
-   })
+   * controller.enable().then(() => {
+   *   // Create a connection to the selected Arduino
+   *   controller.connect().then(() => {
+   *     // Successfully created a connection
+   *   })
+   * })
+   * .catch(() => {
+   *   // No Arduino was selected by the user
+   * })
    */
   enable() {
     // Request access to the USB device
@@ -67,13 +67,13 @@ export default class Controller {
    *
    * @returns {Promise}
    * @example
-   controller.autoConnect()
-     .then(() => {
-       // Connected to already paired Arduino
-     })
-     .catch((error) => {
-       // Found already paired Arduino, but couldn't connect
-     })
+   * controller.autoConnect()
+   *   .then(() => {
+   *     // Connected to already paired Arduino
+   *   })
+   *   .catch((error) => {
+   *     // Found already paired Arduino, but couldn't connect
+   *   })
    */
   autoConnect() {
     return this.getPairedDevice().then((device) => {
@@ -102,9 +102,9 @@ export default class Controller {
    *
    * @returns {Promise}
    * @example
-   controller.connect().then(() => {
-     // Successfully created a connection to the selected Arduino
-   })
+   * controller.connect().then(() => {
+   *   // Successfully created a connection to the selected Arduino
+   * })
    */
   connect() {
     // Open connection
@@ -147,7 +147,7 @@ export default class Controller {
    *
    * @returns {Promise}
    * @example
-   controller.send([255, 0, 0])
+   * controller.send([255, 0, 0])
    */
   send(data) {
     return new Promise((resolve, reject) => {
@@ -176,9 +176,9 @@ export default class Controller {
    * number: Update the channel with value
    * array: Update value.length channels starting with channel
    * @example <caption>Update a single channel</caption>
-   controller.updateUniverse(1, 255)
+   * controller.updateUniverse(1, 255)
    * @example <caption>Update multiple channels starting with channel</caption>
-   controller.updateUniverse(1, [255, 0, 0])
+   * controller.updateUniverse(1, [255, 0, 0])
    */
   updateUniverse(channel, value) {
     return new Promise((resolve, reject) => {
@@ -207,9 +207,9 @@ export default class Controller {
    *
    * @returns {Promise}
    * @example
-   controller.disconnect().then(() => {
-     // Destroyed connection to USB device, but USB device is still paired with the browser
-   })
+   * controller.disconnect().then(() => {
+   *   // Destroyed connection to USB device, but USB device is still paired with the browser
+   *})
    */
   disconnect() {
     // Declare that we don't want to receive data anymore

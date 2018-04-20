@@ -6,11 +6,7 @@ Do you want to build your own DMX512 controller? And use it directly in the brow
 2. Connect it via USB to your computer
 3. [Open the demo page](https://nerddisco.github.io/webusb-dmx512-controller) and start interacting with the controller
 
----
-
 ![Arduino Leonardo with DMX512 shield attached](images/webusb_dmx512_controller.jpg)
-
----
 
 ## Documentation
 
@@ -56,14 +52,14 @@ Note: This function has to be triggered by a user gesture
 **Example**  
 ```js
 controller.enable().then(() => {
-     // Create a connection to the selected Arduino
-     controller.connect().then(() => {
-       // Successfully created a connection
-     })
-   })
-   .catch(() => {
-     // No Arduino was selected by the user
-   })
+  // Create a connection to the selected Arduino
+  controller.connect().then(() => {
+    // Successfully created a connection
+  })
+})
+.catch(() => {
+  // No Arduino was selected by the user
+})
 ```
 <a name="getPairedDevice"></a>
 
@@ -79,12 +75,12 @@ paired with the Browser and save a reference to the device.
 **Example**  
 ```js
 controller.autoConnect()
-     .then(() => {
-       // Connected to already paired Arduino
-     })
-     .catch((error) => {
-       // Found already paired Arduino, but couldn't connect
-     })
+  .then(() => {
+    // Connected to already paired Arduino
+  })
+  .catch((error) => {
+    // Found already paired Arduino, but couldn't connect
+  })
 ```
 <a name="connect"></a>
 
@@ -95,8 +91,8 @@ we are ready to send data to it.
 **Example**  
 ```js
 controller.connect().then(() => {
-     // Successfully created a connection to the selected Arduino
-   })
+  // Successfully created a connection to the selected Arduino
+})
 ```
 <a name="send"></a>
 
@@ -125,11 +121,11 @@ Update the channel(s) of the DMX512 universe with the provided value
 
 **Example** *(Update a single channel)*  
 ```js
-   controller.updateUniverse(1, 255)
+controller.updateUniverse(1, 255)
 ```
 **Example** *(Update multiple channels starting with channel)*  
 ```js
-   controller.updateUniverse(1, [255, 0, 0])
+controller.updateUniverse(1, [255, 0, 0])
 ```
 <a name="disconnect"></a>
 
@@ -141,8 +137,8 @@ Note: The device is still paired to the browser!
 **Example**  
 ```js
 controller.disconnect().then(() => {
-     // Destroyed connection to USB device, but USB device is still paired with the browser
-   })
+  // Destroyed connection to USB device, but USB device is still paired with the browser
+})
 ```
 
 ---
