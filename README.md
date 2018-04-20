@@ -24,7 +24,97 @@ In order to use the module you have to use a browser that supports WebUSB
 
 ### Using the controller with WebUSB
 
-TODO: Add a how to use the JS code
+## Functions
+
+<dl>
+<dt><a href="#enable">enable()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Enable WebUSB and when successful
+Save a reference to the selected USB device</p>
+<p>Note: This function has to be triggered by a user gesture</p>
+</dd>
+<dt><a href="#getPairedDevice">getPairedDevice()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Get a USB device that was already paired with the browser.</p>
+</dd>
+<dt><a href="#autoConnect">autoConnect()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Automatically connect to a USB device that was already
+paired with the Browser and save a reference to the device.</p>
+</dd>
+<dt><a href="#connect">connect()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Open a connection to the selected USB device and tell the device that
+we are ready to send data to it.</p>
+</dd>
+<dt><a href="#send">send(data)</a> ⇒ <code>Promise</code></dt>
+<dd><p>Send data to the USB device to update the DMX512 universe</p>
+</dd>
+<dt><a href="#updateUniverse">updateUniverse(channel, value)</a></dt>
+<dd><p>Update the channel(s) of the DMX512 universe with the provided value</p>
+</dd>
+<dt><a href="#disconnect">disconnect()</a> ⇒ <code>Promise</code></dt>
+<dd><p>Disconnect from the USB device</p>
+<p>Note: The device is still paired to the browser!</p>
+</dd>
+</dl>
+
+<a name="enable"></a>
+
+## enable() ⇒ <code>Promise</code>
+Enable WebUSB and when successful
+Save a reference to the selected USB device
+
+Note: This function has to be triggered by a user gesture
+
+**Kind**: global function  
+<a name="getPairedDevice"></a>
+
+## getPairedDevice() ⇒ <code>Promise</code>
+Get a USB device that was already paired with the browser.
+
+**Kind**: global function  
+<a name="autoConnect"></a>
+
+## autoConnect() ⇒ <code>Promise</code>
+Automatically connect to a USB device that was already
+paired with the Browser and save a reference to the device.
+
+**Kind**: global function  
+<a name="connect"></a>
+
+## connect() ⇒ <code>Promise</code>
+Open a connection to the selected USB device and tell the device that
+we are ready to send data to it.
+
+**Kind**: global function  
+<a name="send"></a>
+
+## send(data) ⇒ <code>Promise</code>
+Send data to the USB device to update the DMX512 universe
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| data | <code>Array</code> | List containing all channels that should be updated in the universe |
+
+<a name="updateUniverse"></a>
+
+## updateUniverse(channel, value)
+Update the channel(s) of the DMX512 universe with the provided value
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| channel | <code>number</code> | The channel to update |
+| value | <code>number</code> \| <code>Array</code> | The value to update the channel: number: Update the channel with value array: Update value.length channels starting with channel |
+
+<a name="disconnect"></a>
+
+## disconnect() ⇒ <code>Promise</code>
+Disconnect from the USB device
+
+Note: The device is still paired to the browser!
+
+**Kind**: global function  
 
 ### Run the demo on your computer
 
