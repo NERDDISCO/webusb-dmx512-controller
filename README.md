@@ -145,6 +145,8 @@ controller.disconnect().then(() => {
    })
 ```
 
+---
+
 ### Browser Support
 
 In order to use the module you have to use a browser that supports WebUSB
