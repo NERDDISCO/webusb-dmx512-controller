@@ -1,16 +1,31 @@
 /**
- * The controller that is creating a connection to the USB device (Arduino)
- * to send data to it using WebUSB.
+ * The controller is creating a connection to the USB device (Arduino) to send data over WebUSB.
+ * By using the default <code>args</code> you will only see the following Arduino in the user prompt:
+ * - Arduino Leonardo
+ * - Arduino Leonardo ETH
+ * - Seeeduino Lite
+ * @module Controller
  *
- * @param {object} args - Arguments to configure the controller
+ * @param {Object} args - Arguments to configure the controller
+ * @param {Object[]} args.filters - List of devices that are whitelisted when opening the user prompt to select an Arduino
+ * @param {Object} args.device - The selected Arduino to use as the DMX512 controller
+ * @param {number[]} args.universe - Holds all the values for each channel of the DMX512 universe
+ * @example
+ * import Controller from 'webusb-dmx512-controller/controller.js'
+ *
+ * // Create a new controller using the default properties
+ * const controller = new Controller()
  */
 export default class Controller {
+
   constructor(args = {}) {
     // Reference to the selected USB device
     this.device = args.device || undefined
 
     // Only allow specific USB devices
     this.filters = args.filters || [
+      // Arduino LLC (9025), Leonardo (32822)
+      { vendorId: 0x2341, productId: 0x8036 },
       // Arduino LLC (10755), Leonardo ETH (32832)
       { vendorId: 0x2a03, productId: 0x8040 }
     ]
@@ -20,12 +35,11 @@ export default class Controller {
   }
 
   /**
-   * Enable WebUSB and when successful
-   * Save a reference to the selected USB device
+   * Enable WebUSB and save the selected Arduino into <code>controller.device</code>
    *
    * Note: This function has to be triggered by a user gesture
    *
-   * @returns {Promise}
+   * @return {Promise}
    *
    * @example
    * controller.enable().then(() => {
@@ -34,7 +48,7 @@ export default class Controller {
    *     // Successfully created a connection
    *   })
    * })
-   * .catch(() => {
+   * .catch(error => {
    *   // No Arduino was selected by the user
    * })
    */
@@ -51,7 +65,7 @@ export default class Controller {
   /**
    * Get a USB device that was already paired with the browser.
    *
-   * @returns {Promise}
+   * @return {Promise}
    */
   getPairedDevice() {
     return navigator.usb.getDevices()
@@ -62,17 +76,16 @@ export default class Controller {
   }
 
   /**
-   * Automatically connect to a USB device that was already
-   * paired with the Browser and save a reference to the device.
+   * Automatically connect to a USB device that was already paired with the Browser and save it into <code>controller.device</code>
    *
-   * @returns {Promise}
+   * @return {Promise}
    * @example
    * controller.autoConnect()
    *   .then(() => {
    *     // Connected to already paired Arduino
    *   })
-   *   .catch((error) => {
-   *     // Found already paired Arduino, but couldn't connect
+   *   .catch(error => {
+   *     // Nothing found or found paired Arduino, but it's not connected to computer
    *   })
    */
   autoConnect() {
@@ -84,7 +97,7 @@ export default class Controller {
 
         // USB Device is not connected to the computer
         if (this.device === undefined) {
-          return reject(new Error('USB device is not connected to the computer'))
+          return reject(new Error('Can not find USB device.'))
 
         // USB device is connected to the computer, so try to create a WebUSB connection
         } else {
@@ -100,7 +113,7 @@ export default class Controller {
    * Open a connection to the selected USB device and tell the device that
    * we are ready to send data to it.
    *
-   * @returns {Promise}
+   * @return {Promise}
    * @example
    * controller.connect().then(() => {
    *   // Successfully created a connection to the selected Arduino
@@ -145,7 +158,7 @@ export default class Controller {
    *
    * @param {Array} data - List containing all channels that should be updated in the universe
    *
-   * @returns {Promise}
+   * @return {Promise}
    * @example
    * controller.send([255, 0, 0])
    */
@@ -169,16 +182,16 @@ export default class Controller {
   }
 
   /**
-   * Update the channel(s) of the DMX512 universe with the provided value
+   * Update the <code>channel</code>(s) of the DMX512 universe with the provided <code>value</code>
    *
    * @param {number} channel - The channel to update
-   * @param {(number|Array)} value - The value to update the channel:
-   * number: Update the channel with value
-   * array: Update value.length channels starting with channel
+   * @param {(number|number[])} value - The value to update the channel, supporting two different modes: single (= <code>number</code>) & multi (= <code>Array</code>)
    * @example <caption>Update a single channel</caption>
+   * // Update channel #1
    * controller.updateUniverse(1, 255)
    * @example <caption>Update multiple channels starting with channel</caption>
-   * controller.updateUniverse(1, [255, 0, 0])
+   * // Update channel #5 with 255, #6 with 0 & #7 with 20
+   * controller.updateUniverse(5, [255, 0, 20])
    */
   updateUniverse(channel, value) {
     return new Promise((resolve, reject) => {
@@ -205,7 +218,7 @@ export default class Controller {
    *
    * Note: The device is still paired to the browser!
    *
-   * @returns {Promise}
+   * @return {Promise}
    * @example
    * controller.disconnect().then(() => {
    *   // Destroyed connection to USB device, but USB device is still paired with the browser
