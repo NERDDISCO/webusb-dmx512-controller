@@ -1,4 +1,45 @@
+leonardowebusb.name=Arduino Leonardo (WebUSB)
+leonardowebusb.vid.0=0x2341
+leonardowebusb.pid.0=0x0036
+leonardowebusb.vid.1=0x2341
+leonardowebusb.pid.1=0x8036
+leonardowebusb.vid.2=0x2A03
+leonardowebusb.pid.2=0x0036
+leonardowebusb.vid.3=0x2A03
+leonardowebusb.pid.3=0x8036
+
+leonardowebusb.upload.tool=avrdude
+leonardowebusb.upload.protocol=avr109
+leonardowebusb.upload.maximum_size=28672
+leonardowebusb.upload.maximum_data_size=2560
+leonardowebusb.upload.speed=57600
+leonardowebusb.upload.disable_flushing=true
+leonardowebusb.upload.use_1200bps_touch=true
+leonardowebusb.upload.wait_for_upload_port=true
+
+leonardowebusb.bootloader.tool=avrdude
+leonardowebusb.bootloader.low_fuses=0xff
+leonardowebusb.bootloader.high_fuses=0xd8
+leonardowebusb.bootloader.extended_fuses=0xcb
+leonardowebusb.bootloader.file=caterina/Caterina-Leonardo.hex
+leonardowebusb.bootloader.unlock_bits=0x3F
+leonardowebusb.bootloader.lock_bits=0x2F
+
+leonardowebusb.build.mcu=atmega32u4
+leonardowebusb.build.f_cpu=16000000L
+leonardowebusb.build.vid=0x2341
+leonardowebusb.build.pid=0x8036
+leonardowebusb.build.usb_product="Arduino Leonardo"
+leonardowebusb.build.board=AVR_LEONARDO
+leonardowebusb.build.core=arduino
+leonardowebusb.build.variant=leonardo
+leonardowebusb.build.extra_flags={build.usb_flags} "-DUSB_VERSION=0x210"
+
+
+
 ###################################################
+
+
 
 leonardoethwebusb.name=Arduino Leonardo ETH (WebUSB)
 leonardoethwebusb.vid.0=0x2a03
@@ -32,3 +73,38 @@ leonardoethwebusb.build.board=AVR_LEONARDO_ETH
 leonardoethwebusb.build.core=arduino
 leonardoethwebusb.build.variant=leonardo
 leonardoethwebusb.build.extra_flags={build.usb_flags} "-DUSB_VERSION=0x210"
+
+
+
+###################################################
+
+
+
+seeeduinolitewebusb.name=Seeeduino Lite (WebUSB)
+
+seeeduinolitewebusb.upload.tool=avrdude
+seeeduinolitewebusb.upload.protocol=avr109
+seeeduinolitewebusb.upload.maximum_size=28672
+seeeduinolitewebusb.upload.maximum_data_size=2560
+seeeduinolitewebusb.upload.speed=57600
+seeeduinolitewebusb.upload.disable_flushing=true
+seeeduinolitewebusb.upload.use_1200bps_touch=true
+seeeduinolitewebusb.upload.wait_for_upload_port=true
+
+seeeduinolitewebusb.bootloader.tool=avrdude
+seeeduinolitewebusb.bootloader.low_fuses=0xff
+seeeduinolitewebusb.bootloader.high_fuses=0xd8
+seeeduinolitewebusb.bootloader.extended_fuses=0xcb
+seeeduinolitewebusb.bootloader.file=caterina/Caterina-Lite.hex
+seeeduinolitewebusb.bootloader.unlock_bits=0x3F
+seeeduinolitewebusb.bootloader.lock_bits=0x2F
+
+seeeduinolitewebusb.build.mcu=atmega32u4
+seeeduinolitewebusb.build.f_cpu=16000000L
+seeeduinolitewebusb.build.vid=0x2886
+seeeduinolitewebusb.build.pid=0x8002
+seeeduinolitewebusb.build.usb_product="Seeeduino Lite"
+seeeduinolitewebusb.build.board=AVR_LEONARDO
+seeeduinolitewebusb.build.core=arduino
+seeeduinolitewebusb.build.variant=leonardo
+seeeduinolitewebusb.build.extra_flags={build.usb_flags} "-DUSB_VERSION=0x210"
