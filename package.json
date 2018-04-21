@@ -1,6 +1,6 @@
 {
   "name": "webusb-dmx512-controller",
-  "version": "1.0.0-rc.7",
+  "version": "1.0.0-rc.8",
   "description": "Manage a DMX512 universe with an Arduino-based controller directly from the browser by leveraging WebUSB.",
   "main": "controller.js",
   "module": "controller.js",
@@ -8,11 +8,13 @@
   "unpkg": "umd/webusb-dmx512-controller.js",
   "scripts": {
     "start": "webpack-dev-server --hot",
-    "prepublish": "npm run build && npm run jsdoc",
+    "version": "auto-changelog -p && git add CHANGELOG.md",
+    "prepublish": "npm run build && npm run jsdoc && npm run toc",
     "clean": "rimraf umd docs/*.js docs/*.map",
     "build": "npm run clean && npm run build:umd",
     "build:umd": "cross-env NODE_ENV=production webpack",
-    "jsdoc": "jsdoc2md --heading-depth 3 --partial .github/scope.hbs --template .github/README_template.hbs --files controller.js > README.md"
+    "jsdoc": "jsdoc2md --heading-depth 2 --partial .github/scope.hbs --template .github/API_template.md --files controller.js > docs/API.md",
+    "toc": "markdown-toc -i README.md"
   },
   "author": "Tim Pietrusky",
   "license": "MIT",
@@ -39,6 +41,7 @@
     "controller.js"
   ],
   "devDependencies": {
+    "auto-changelog": "^1.4.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
@@ -49,10 +52,17 @@
     "html-webpack-plugin": "^3.1.0",
     "http-server": "^0.11.1",
     "jsdoc-to-markdown": "^4.0.1",
+    "markdown-toc": "^1.2.0",
     "rimraf": "^2.6.2",
     "webpack": "^4.2.0",
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1"
+  },
+  "auto-changelog": {
+    "output": "docs/CHANGELOG.md",
+    "template": "keepachangelog",
+    "unreleased": true,
+    "commitLimit": false
   },
   "resolutions": {
     "minimist": "1.2.0",
