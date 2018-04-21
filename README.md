@@ -99,7 +99,7 @@ In order to test the WebUSB DMX512 Controller directly in the browser you can us
 
 Check out the article [WebUSB DMX512 Controller on Medium]() as it provides a detailed explanation on how to use the content of [this repository](https://github.com/NERDDISCO/webusb-dmx512-controller) to build your own WebUSB DMX512 Controller:
 
-![Arduino Leonardo with DMX512 shield attached](images/webusb_dmx512_controller.jpg)
+![Arduino Leonardo with DMX512 shield attached](docs/images/webusb_dmx512_controller.jpg)
 
 ### Hardware
 
