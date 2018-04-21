@@ -99,8 +99,7 @@ controller.autoConnect()
     usbInfo(controller.device)
   })
   .catch((error) => {
-    devConsole.log('Found an already paired USB device', '', 'string')
-    devConsole.log(error, '', 'string')
+    devConsole.log('autoConnect:', error, 'string')
   })
 
 
