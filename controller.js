@@ -24,9 +24,14 @@ export default class Controller {
 
     // Only allow specific USB devices
     this.filters = args.filters || [
-      // Arduino LLC (9025), Leonardo (32822)
+      // Arduino Leonardo
       { vendorId: 0x2341, productId: 0x8036 },
-      // Arduino LLC (10755), Leonardo ETH (32832)
+      { vendorId: 0x2341, productId: 0x0036 },
+      { vendorId: 0x2a03, productId: 0x8036 },
+      { vendorId: 0x2a03, productId: 0x0036 },
+
+      // Arduino Leonardo ETH
+      { vendorId: 0x2a03, productId: 0x0040 },
       { vendorId: 0x2a03, productId: 0x8040 }
     ]
 
