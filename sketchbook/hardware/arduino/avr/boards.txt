@@ -81,6 +81,8 @@ leonardoethwebusb.build.extra_flags={build.usb_flags} "-DUSB_VERSION=0x210"
 
 
 seeeduinolitewebusb.name=Seeeduino Lite (WebUSB)
+seeeduinolitewebusb.vid.0=0x2886
+seeeduinolitewebusb.pid.0=0x8002
 
 seeeduinolitewebusb.upload.tool=avrdude
 seeeduinolitewebusb.upload.protocol=avr109
