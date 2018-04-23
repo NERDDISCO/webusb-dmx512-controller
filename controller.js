@@ -32,7 +32,10 @@ export default class Controller {
 
       // Arduino Leonardo ETH
       { vendorId: 0x2a03, productId: 0x0040 },
-      { vendorId: 0x2a03, productId: 0x8040 }
+      { vendorId: 0x2a03, productId: 0x8040 },
+
+      // Seeeduino Lite
+      { vendorId: 0x2886, productId: 0x8002 }
     ]
 
     // The DMX512 universe with 512 channels
