@@ -9,12 +9,13 @@
   "scripts": {
     "start": "webpack-dev-server --hot",
     "version": "auto-changelog -p && git add CHANGELOG.md",
-    "prepublish": "npm run build && npm run jsdoc && npm run toc",
+    "prepublish": "npm run test && npm run build && npm run jsdoc && npm run toc",
     "clean": "rimraf umd docs/*.js docs/*.map",
     "build": "npm run clean && npm run build:umd",
     "build:umd": "cross-env NODE_ENV=production webpack",
     "jsdoc": "jsdoc2md --heading-depth 2 --partial .github/scope.hbs --template .github/API_template.md --files controller.js > docs/API.md",
-    "toc": "markdown-toc -i README.md"
+    "toc": "markdown-toc -i README.md",
+    "test": "jest"
   },
   "author": "Tim Pietrusky",
   "license": "MIT",
@@ -44,6 +45,7 @@
     "auto-changelog": "^1.4.6",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-jest": "^22.4.3",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "cross-env": "^5.1.4",
@@ -51,6 +53,7 @@
     "html-webpack-harddisk-plugin": "^0.2.0",
     "html-webpack-plugin": "^3.1.0",
     "http-server": "^0.11.1",
+    "jest": "^22.4.3",
     "jsdoc-to-markdown": "^4.0.1",
     "markdown-toc": "^1.2.0",
     "rimraf": "^2.6.2",
