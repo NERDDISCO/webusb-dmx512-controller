@@ -2,7 +2,7 @@
 #include <Conceptinetics.h>
 
 // Whitelisted URLs
-WebUSB WebUSBSerial(1, "nerddisco.github.io/WebUSB-DMX512-Controller");
+WebUSB WebUSBSerial(1, "nerddisco.github.io/webusb-dmx512-controller");
 #define Serial WebUSBSerial
 
 // Amount of channels in the universe
