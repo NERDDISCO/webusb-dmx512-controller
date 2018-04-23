@@ -97,7 +97,7 @@ seeeduinolitewebusb.bootloader.tool=avrdude
 seeeduinolitewebusb.bootloader.low_fuses=0xff
 seeeduinolitewebusb.bootloader.high_fuses=0xd8
 seeeduinolitewebusb.bootloader.extended_fuses=0xcb
-seeeduinolitewebusb.bootloader.file=caterina/Caterina-Lite.hex
+seeeduinolitewebusb.bootloader.file=caterina/Caterina-Leonardo.hex
 seeeduinolitewebusb.bootloader.unlock_bits=0x3F
 seeeduinolitewebusb.bootloader.lock_bits=0x2F
 
