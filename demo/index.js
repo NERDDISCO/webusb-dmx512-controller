@@ -1,64 +1,20 @@
 import Controller from '../controller.js'
-
 import DevConsole from './dev-console.js'
 
 const controller = new Controller()
-const devConsole = new DevConsole()
+const devConsole = new DevConsole({
+  output : document.getElementById('console'),
+  logUniverseElement : document.getElementById('logUniverse')
+})
 
 const activateButton = document.getElementById('activateWebUsb')
 const disconnectButton = document.getElementById('disconnectWebUsb')
 
 const setChannelForm = document.getElementById('updateAnyChannel')
-
-const logUniverseCheckbox = document.getElementById('logUniverse')
-let logUniverseEnabled = false
-
 const color = document.getElementById('changeColor')
 const dimmer = document.getElementById('changeDimmer')
 const uv = document.getElementById('changeUv')
 const strobe = document.getElementById('changeStrobe')
-
-/*
- * Basic information about the USB device, used in the console
- */
-const usbInfo = (device) => {
-  devConsole.log('---', '', 'string')
-  devConsole.log('Selected device', device.productName, 'USBDevice')
-  devConsole.log('---', '', 'string')
-
-  const { configuration, configurations, deviceClass, deviceProtocol,
-    deviceSubclass, deviceVersionMajor, deviceVersionMinor,
-    deviceVersionSubminor, manufacturerName, opened, productId,
-    productName, serialNumber, usbVersionMajor, usbVersionMinor,
-    usbVersionSubminor, vendorId } = device
-
-  devConsole.log('Opened', opened, 'keyvalue')
-  devConsole.log('Vendor ID', vendorId, 'keyvalue')
-  devConsole.log('Manufacturer Name', manufacturerName, 'keyvalue')
-  devConsole.log('Product ID', productId, 'keyvalue')
-  devConsole.log('Product Name', productName, 'keyvalue')
-  devConsole.log('Serialnumber', serialNumber, 'keyvalue')
-
-  devConsole.log('Device Class', deviceClass, 'keyvalue')
-  devConsole.log('Device Protocol', deviceProtocol, 'keyvalue')
-  devConsole.log('Device Subclass', deviceSubclass, 'keyvalue')
-  devConsole.log('Device Version Major', deviceVersionMajor, 'keyvalue')
-  devConsole.log('Device Version Minor', deviceVersionMinor, 'keyvalue')
-  devConsole.log('Device Version Subminor', deviceVersionSubminor, 'keyvalue')
-
-  devConsole.log('USB Version Major', usbVersionMajor, 'keyvalue')
-  devConsole.log('USB Version Minor', usbVersionMinor, 'keyvalue')
-  devConsole.log('USB Version Subminor', usbVersionSubminor, 'keyvalue')
-}
-
-
-
-// Log the content of the whole universe into the console
-const universeInfo = () => {
-  if (logUniverseEnabled) {
-    devConsole.log('', controller.universe, 'array')
-  }
-}
 
 
 
@@ -72,7 +28,7 @@ activateButton.addEventListener('click', e => {
     controller.connect().then(() => {
 
       // Successfully created a connection to the device
-      usbInfo(controller.device)
+      devConsole.logUsbDevice(controller.device)
     })
   })
   .catch(() => {
@@ -96,7 +52,7 @@ disconnectButton.addEventListener('click', e => {
 controller.autoConnect()
   .then(() => {
     devConsole.log('Found an already paired USB device', '', 'string')
-    usbInfo(controller.device)
+    devConsole.logUsbDevice(controller.device)
   })
   .catch((error) => {
     devConsole.log('autoConnect:', error, 'string')
@@ -121,20 +77,12 @@ setChannelForm.addEventListener('submit', e => {
   // Update the universe
   controller.updateUniverse(channel, value)
   .then(() => {
-    universeInfo()
+    devConsole.logUniverse(controller.universe)
   })
   .catch((error) => {
+    devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
-})
-
-
-
-// Listen for changes to enable / disable "log universe to console"
-logUniverseCheckbox.addEventListener('change', e => {
-  const { target } = e
-
-  logUniverseEnabled = target.checked
 })
 
 
@@ -166,9 +114,10 @@ color.addEventListener('change', e => {
   // Why? We are sending an array with 3 values
   controller.updateUniverse(1, value)
   .then(() => {
-    universeInfo()
+    devConsole.logUniverse(controller.universe)
   })
   .catch((error) => {
+    devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
 })
@@ -188,9 +137,10 @@ uv.addEventListener('change', e => {
   // Update starts at channel 4
   controller.updateUniverse(4, value)
   .then(() => {
-    universeInfo()
+    devConsole.logUniverse(controller.universe)
   })
   .catch((error) => {
+    devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
 
@@ -213,9 +163,10 @@ dimmer.addEventListener('change', e => {
   // Update starts at channel 5
   controller.updateUniverse(5, value)
   .then(() => {
-    universeInfo()
+    devConsole.logUniverse(controller.universe)
   })
   .catch((error) => {
+    devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
 })
@@ -237,9 +188,10 @@ strobe.addEventListener('change', e => {
   // Update starts at channel 6
   controller.updateUniverse(6, value)
   .then(() => {
-    universeInfo()
+    devConsole.logUniverse(controller.universe)
   })
   .catch((error) => {
+    devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
 })
