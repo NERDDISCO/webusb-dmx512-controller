@@ -1,0 +1,2 @@
+name=NERDDISCO: WebUSB DMX512 Controller
+version=1.0.0
