@@ -4,7 +4,7 @@
 
 Manage a DMX512 universe with an Arduino-based controller directly from the browser by leveraging WebUSB.
 
-👉 To fully understand the background of this module you should read the article [WebUSB DMX512 Controller on Medium](). 👈
+👉 To fully understand the background of this module you should read the article [How to build a WebUSB DMX512 Controller by using an Arduino](https://medium.com/@timpietrusky/how-to-build-a-webusb-dmx512-controller-by-using-an-arduino-e0dd8efb7bf0). 👈
 
 ## Table of Contents
 
@@ -97,7 +97,7 @@ In order to test the WebUSB DMX512 Controller directly in the browser you can us
 
 ## Build your own controller
 
-Check out the article [WebUSB DMX512 Controller on Medium]() as it provides a detailed explanation on how to use the content of [this repository](https://github.com/NERDDISCO/webusb-dmx512-controller) to build your own WebUSB DMX512 Controller:
+Check out the article "[How to build a WebUSB DMX512 Controller by using an Arduino](https://medium.com/@timpietrusky/how-to-build-a-webusb-dmx512-controller-by-using-an-arduino-e0dd8efb7bf0)" as it provides a detailed explanation on how to use the content of [this repository](https://github.com/NERDDISCO/webusb-dmx512-controller) to build your own WebUSB DMX512 Controller:
 
 ![Arduino Leonardo with DMX512 shield attached](https://github.com/NERDDISCO/webusb-dmx512-controller/raw/master/docs/images/webusb_dmx512_controller.jpg)
 
