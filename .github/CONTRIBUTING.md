@@ -7,6 +7,7 @@ If you want to contribute please follow the guide in this file.
 - [Pull request](#pull-request)
 - [Issues](#issues)
 - [Development](#development)
+- [New release](#new-release)
 
 <!-- tocstop -->
 
@@ -36,3 +37,8 @@ Include info about your development environment
 `npm <command>`
 
 * `start`: starts the development server
+
+## New release
+
+* `npm version` to update the version & the docs/CHANGELOG.md
+* `npm run release`: This will publish the release on npm and push the released tag to GitHub
