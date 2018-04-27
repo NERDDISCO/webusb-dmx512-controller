@@ -10,7 +10,7 @@
     "start": "webpack-dev-server --hot --config webpack.demo.config.js",
     "version": "auto-changelog -p && git add docs/CHANGELOG.md",
     "release": "npm publish && npm run release:github",
-    "release:github": "git add . && git tag -a v$npm_package_version -m 'Released $npm_package_version'",
+    "release:github": "git add . && git push origin tag v$npm_package_version",
     "prepublish": "npm run test && npm run build && npm run jsdoc && npm run toc",
     "clean": "rimraf umd docs/*.js docs/*.map",
     "build": "npm run clean && npm run build:umd && npm run build:demo",
