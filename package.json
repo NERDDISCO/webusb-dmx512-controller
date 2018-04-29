@@ -9,6 +9,7 @@
   "scripts": {
     "start": "webpack-dev-server --hot --config webpack.demo.config.js",
     "version": "auto-changelog -p && git add docs/CHANGELOG.md",
+    "postversion": "git push && git push --tags && npm run clean",
     "release": "npm publish && npm run release:github",
     "release:github": "git add . && git push origin tag v$npm_package_version",
     "prepublish": "npm run test && npm run build && npm run jsdoc && npm run toc",
@@ -42,7 +43,9 @@
   "files": [
     "umd",
     "controller.js",
-    "README.md"
+    "README.md",
+    "docs/CHANGELOG.md",
+    "docs/API.md"
   ],
   "devDependencies": {
     "auto-changelog": "^1.4.6",
