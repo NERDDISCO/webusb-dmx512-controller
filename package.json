@@ -1,6 +1,6 @@
 {
   "name": "webusb-dmx512-controller",
-  "version": "1.0.4",
+  "version": "0.0.0-development",
   "description": "Manage a DMX512 universe with an Arduino-based controller directly from the browser by leveraging WebUSB.",
   "main": "controller.js",
   "module": "controller.js",
@@ -8,18 +8,15 @@
   "unpkg": "umd/webusb-dmx512-controller.js",
   "scripts": {
     "start": "webpack-dev-server --hot --config webpack.demo.config.js",
-    "version": "auto-changelog -p && git add docs/CHANGELOG.md",
-    "postversion": "git push && git push --tags && npm run clean",
-    "release": "npm publish && npm run release:github",
-    "release:github": "git add . && git push origin tag v$npm_package_version",
-    "prepublish": "npm run test && npm run build && npm run jsdoc && npm run toc",
-    "clean": "rimraf umd docs/*.js docs/*.map",
+    "test": "jest",
     "build": "npm run clean && npm run build:umd && npm run build:demo",
     "build:demo": "cross-env NODE_ENV=production webpack --config webpack.demo.config.js",
     "build:umd": "cross-env NODE_ENV=production webpack --config webpack.umd.config.js",
+    "clean": "rimraf umd docs/*.js docs/*.map",
     "jsdoc": "jsdoc2md --heading-depth 2 --partial .github/scope.hbs --template .github/API_template.md --files controller.js > docs/API.md",
     "toc": "markdown-toc -i README.md",
-    "test": "jest"
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "author": "Tim Pietrusky",
   "license": "MIT",
@@ -37,7 +34,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NERDDISCO/webusb-dmx512-controller.git"
+    "url": "https://github.com/NERDDISCO/webusb-dmx512-controller.git"
   },
   "homepage": "https://github.com/NERDDISCO/webusb-dmx512-controller#readme",
   "files": [
@@ -48,6 +45,8 @@
     "docs/API.md"
   ],
   "devDependencies": {
+    "@semantic-release/changelog": "^2.0.2",
+    "@semantic-release/git": "^4.0.3",
     "auto-changelog": "^1.4.6",
     "babel-core": "^6.26.0",
     "babel-jest": "^22.4.3",
@@ -56,6 +55,8 @@
     "jsdoc-to-markdown": "^4.0.1",
     "markdown-toc": "^1.2.0",
     "rimraf": "^2.6.2",
+    "semantic-release": "^15.1.7",
+    "travis-deploy-once": "^5.0.0",
     "webpack": "^4.2.0",
     "webpack-cli": "^2.0.15",
     "webpack-dev-server": "^3.1.3"
