@@ -41,7 +41,7 @@ export default class DevConsole {
         break
 
       default:
-        fullMessage = message + ' ' + data
+        fullMessage = `${message} ${data}`
     }
 
     console.log(fullMessage)

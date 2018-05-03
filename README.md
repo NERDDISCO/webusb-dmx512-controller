@@ -57,10 +57,10 @@ activateButton.addEventListener('click', e => {
   // Enable WebUSB and select the Arduino
   controller.enable()
     // Create a connection to the selected Arduino
-    .then(() => controller.connect()) 
+    .then(() => controller.connect())
     // Update the 1 channel of the DMX512 universe with value 255
-    .then(() => controller.updateUniverse(1, 255)); 
-    
+    .then(() => controller.updateUniverse(1, 255));
+
 })
 ```
 

@@ -50,15 +50,15 @@ export default class Controller {
    * @return {Promise}
    *
    * @example
-   * controller.enable().then(() => {
+   * controller.enable()
    *   // Create a connection to the selected Arduino
-   *   controller.connect().then(() => {
+   *   .then(() => controller.connect())
+   *   .then(() => {
    *     // Successfully created a connection
    *   })
-   * })
-   * .catch(error => {
-   *   // No Arduino was selected by the user
-   * })
+   *   .catch(error => {
+   *     // No Arduino was selected by the user
+   *   })
    */
   enable() {
     // Request access to the USB device
@@ -97,7 +97,7 @@ export default class Controller {
    *   })
    */
   autoConnect() {
-    return this.getPairedDevice().then((device) => {
+    return this.getPairedDevice().then(device => {
 
       this.device = device
 
