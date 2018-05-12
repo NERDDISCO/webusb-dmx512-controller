@@ -6,10 +6,12 @@ notifications:
   email: false
 node_js:
   - '9'
-after_success:
+script:
+  - npm run test
   - npm run build
   - npm run jsdoc
   - npm run toc
+after_success:
   - npm run travis-deploy-once "npm run semantic-release"
 branches:
   except:
