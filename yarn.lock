@@ -468,17 +468,6 @@ atob@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.0.tgz#ab2b150e51d7b122b9efc8d7340c06b6c41076bc"
 
-auto-changelog@^1.4.6:
-  version "1.4.6"
-  resolved "https://registry.yarnpkg.com/auto-changelog/-/auto-changelog-1.4.6.tgz#65d3c761c57dde7964e9ee550b27e45ca9772e56"
-  dependencies:
-    babel-polyfill "^6.26.0"
-    commander "^2.9.0"
-    fs-extra "^5.0.0"
-    handlebars "^4.0.11"
-    parse-github-url "^1.0.1"
-    semver "^5.1.0"
-
 autolinker@~0.15.0:
   version "0.15.3"
   resolved "https://registry.yarnpkg.com/autolinker/-/autolinker-0.15.3.tgz#342417d8f2f3461b14cf09088d5edf8791dc9832"
@@ -1779,10 +1768,6 @@ command-line-usage@^4.1.0:
     array-back "^2.0.0"
     table-layout "^0.4.2"
     typical "^2.6.1"
-
-commander@^2.9.0:
-  version "2.15.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-2.15.1.tgz#df46e867d0fc2aec66a34662b406a9ccafff5b0f"
 
 commander@~2.13.0:
   version "2.13.0"
