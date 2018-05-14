@@ -207,12 +207,16 @@ export default class Controller {
       // The DMX512 universe starts with channel 1, but the array with 0
       channel = channel - 1
 
+      // Single
       if (Number.isInteger(value)) {
         this.universe.splice(channel, 1, value)
+
+      // Multiple
       } else if (Array.isArray(value)) {
         this.universe.splice(channel, value.length, ...value)
+      
       } else {
-        return reject(new Error('Could not update Universe because the provided value is not of type Integer or Array'))
+        return reject(new Error('Could not update Universe because the provided value is not of type number or number[]'))
       }
 
       // Send the updated universe to the DMX512 controller
