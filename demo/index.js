@@ -22,18 +22,16 @@ const strobe = document.getElementById('changeStrobe')
 activateButton.addEventListener('click', e => {
 
   // Enable WebUSB and select the Arduino
-  controller.enable().then(() => {
-
+  controller.enable()
     // Create a connection to the selected Arduino
-    controller.connect().then(() => {
-
+    .then(() => controller.connect())
+    .then(() => {
       // Successfully created a connection to the device
       devConsole.logUsbDevice(controller.device)
     })
-  })
-  .catch(() => {
-    devConsole.log('No USB device was selected', '', 'string')
-  })
+    .catch(() => {
+      devConsole.log('No USB device was selected', '', 'string')
+    })
 
 })
 
@@ -54,7 +52,7 @@ controller.autoConnect()
     devConsole.log('Found an already paired USB device', '', 'string')
     devConsole.logUsbDevice(controller.device)
   })
-  .catch((error) => {
+  .catch(error => {
     devConsole.log('autoConnect:', error, 'string')
   })
 
@@ -79,7 +77,7 @@ setChannelForm.addEventListener('submit', e => {
   .then(() => {
     devConsole.logUniverse(controller.universe)
   })
-  .catch((error) => {
+  .catch(error => {
     devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
@@ -116,7 +114,7 @@ color.addEventListener('change', e => {
   .then(() => {
     devConsole.logUniverse(controller.universe)
   })
-  .catch((error) => {
+  .catch(error => {
     devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
@@ -139,7 +137,7 @@ uv.addEventListener('change', e => {
   .then(() => {
     devConsole.logUniverse(controller.universe)
   })
-  .catch((error) => {
+  .catch(error => {
     devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })
@@ -190,7 +188,7 @@ strobe.addEventListener('change', e => {
   .then(() => {
     devConsole.logUniverse(controller.universe)
   })
-  .catch((error) => {
+  .catch(error => {
     devConsole.logUniverse(controller.universe)
     devConsole.log(error, '', 'string')
   })

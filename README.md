@@ -55,15 +55,12 @@ const activateButton = document.getElementById('activateWebUsb')
 activateButton.addEventListener('click', e => {
 
   // Enable WebUSB and select the Arduino
-  controller.enable().then(() => {
-
+  controller.enable()
     // Create a connection to the selected Arduino
-    controller.connect().then(() => {
+    .then(() => controller.connect())
+    // Update the 1 channel of the DMX512 universe with value 255
+    .then(() => controller.updateUniverse(1, 255));
 
-      // Update the 1 channel of the DMX512 universe with value 255
-      controller.updateUniverse(1, 255)
-    })
-  })
 })
 ```
 
