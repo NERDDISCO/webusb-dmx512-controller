@@ -18,6 +18,18 @@ module.exports = {
     libraryTarget: "umd"
   },
   mode: process.env.NODE_ENV || "development",
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {
+          // eslint options (if necessary)
+        }
+      },
+    ],
+  },
   devtool: "source-map",
   devServer: {
     contentBase: DOCS,
