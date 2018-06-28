@@ -16,7 +16,36 @@
    SOFTWARE.
  */
 
+#define MS_OS_20_SET_HEADER_DESCRIPTOR 0x00
+#define MS_OS_20_SUBSET_HEADER_CONFIGURATION 0x01
+#define MS_OS_20_SUBSET_HEADER_FUNCTION 0x02
+#define MS_OS_20_FEATURE_COMPATIBLE_ID 0x03
+#define MS_OS_20_FEATURE_REG_PROPERTY 0x04
+#define MS_OS_20_DESCRIPTOR_LENGTH 0xb2
+
 #include "WebUSB.h"
+
+#ifdef ARDUINO_ARCH_SAMD
+
+#define USB_SendControl				USBDevice.sendControl
+#define USB_RecvControl				USBDevice.recvControl
+#define USB_Available				USBDevice.available
+#define USB_Recv					USBDevice.recv
+#define USB_Send					USBDevice.send
+#define USB_SendSpace(ep)			(EPX_SIZE - 1)
+#define USB_Flush					USBDevice.flush
+
+#define TRANSFER_PGM 0
+
+#define EP_TYPE_BULK_IN_WEBUSB		USB_ENDPOINT_TYPE_BULK | USB_ENDPOINT_IN(0);
+#define EP_TYPE_BULK_OUT_WEBUSB		USB_ENDPOINT_TYPE_BULK | USB_ENDPOINT_OUT(0);
+
+#else
+
+#define EP_TYPE_BULK_IN_WEBUSB		EP_TYPE_BULK_IN
+#define EP_TYPE_BULK_OUT_WEBUSB		EP_TYPE_BULK_OUT
+
+#endif
 
 const uint8_t BOS_DESCRIPTOR_PREFIX[] PROGMEM = {
 0x05,  // Length
@@ -46,7 +75,7 @@ const uint8_t BOS_DESCRIPTOR_SUFFIX[] PROGMEM {
 0xDF, 0x60, 0xDD, 0xD8, 0x89, 0x45, 0xC7, 0x4C,
 0x9C, 0xD2, 0x65, 0x9D, 0x9E, 0x64, 0x8A, 0x9F,  // MS OS 2.0 GUID
 0x00, 0x00, 0x03, 0x06,  // Windows version
-0x2e, 0x00,  // Descriptor set length
+MS_OS_20_DESCRIPTOR_LENGTH, 0x00,  // Descriptor set length
 0x02,  // Vendor request code
 0x00   // Alternate enumeration code
 };
@@ -54,42 +83,60 @@ const uint8_t BOS_DESCRIPTOR_SUFFIX[] PROGMEM {
 const uint8_t MS_OS_20_DESCRIPTOR_PREFIX[] PROGMEM = {
 // Microsoft OS 2.0 descriptor set header (table 10)
 0x0A, 0x00,  // Descriptor size (10 bytes)
-0x00, 0x00,  // MS OS 2.0 descriptor set header
+MS_OS_20_SET_HEADER_DESCRIPTOR, 0x00,  // MS OS 2.0 descriptor set header
 0x00, 0x00, 0x03, 0x06,  // Windows version (8.1) (0x06030000)
-0x2e, 0x00,  // Size, MS OS 2.0 descriptor set
+MS_OS_20_DESCRIPTOR_LENGTH, 0x00,  // Size, MS OS 2.0 descriptor set
 
 // Microsoft OS 2.0 configuration subset header
 0x08, 0x00,  // Descriptor size (8 bytes)
-0x01, 0x00,  // MS OS 2.0 configuration subset header
+ MS_OS_20_SUBSET_HEADER_CONFIGURATION, 0x00,  // MS OS 2.0 configuration subset header
 0x00,        // bConfigurationValue
 0x00,        // Reserved
-0x24, 0x00,  // Size, MS OS 2.0 configuration subset
+0xA8, 0x00,  // Size, MS OS 2.0 configuration subset
 
 // Microsoft OS 2.0 function subset header
 0x08, 0x00,  // Descriptor size (8 bytes)
-0x02, 0x00,  // MS OS 2.0 function subset header
+ MS_OS_20_SUBSET_HEADER_FUNCTION, 0x00,  // MS OS 2.0 function subset header
 };
 
 // First interface number (1 byte) sent here.
 
 const uint8_t MS_OS_20_DESCRIPTOR_SUFFIX[] PROGMEM = {
 0x00,        // Reserved
-0x1c, 0x00,  // Size, MS OS 2.0 function subset
+0xA0, 0x00,  // Size, MS OS 2.0 function subset
 
 // Microsoft OS 2.0 compatible ID descriptor (table 13)
 0x14, 0x00,  // wLength
-0x03, 0x00,  // MS_OS_20_FEATURE_COMPATIBLE_ID
+MS_OS_20_FEATURE_COMPATIBLE_ID, 0x00,  // MS_OS_20_FEATURE_COMPATIBLE_ID
 'W',  'I',  'N',  'U',  'S',  'B',  0x00, 0x00,
 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
+
+const uint8_t MS_OS_20_CUSTOM_PROPERTY[] PROGMEM = {
+0x84, 0x00,   //wLength: 
+MS_OS_20_FEATURE_REG_PROPERTY, 0x00,   // wDescriptorType: MS_OS_20_FEATURE_REG_PROPERTY: 0x04 (Table 9)
+0x07, 0x00,   //wPropertyDataType: REG_MULTI_SZ (Table 15)
+0x2a, 0x00,   //wPropertyNameLength: 
+//bPropertyName: “DeviceInterfaceGUID”
+'D', 0x00, 'e', 0x00, 'v', 0x00, 'i', 0x00, 'c', 0x00, 'e', 0x00, 'I', 0x00, 'n', 0x00, 't', 0x00, 'e', 0x00, 
+'r', 0x00, 'f', 0x00, 'a', 0x00, 'c', 0x00, 'e', 0x00, 'G', 0x00, 'U', 0x00, 'I', 0x00, 'D', 0x00, 's', 0x00, 
+0x00, 0x00,
+0x50, 0x00,   // wPropertyDataLength
+//bPropertyData: “{975F44D9-0D08-43FD-8B3E-127CA8AFFF9D}”.
+'{', 0x00, '9', 0x00, '7', 0x00, '5', 0x00, 'F', 0x00, '4', 0x00, '4', 0x00, 'D', 0x00, '9', 0x00, '-', 0x00, 
+'0', 0x00, 'D', 0x00, '0', 0x00, '8', 0x00, '-', 0x00, '4', 0x00, '3', 0x00, 'F', 0x00, 'D', 0x00, '-', 0x00, 
+'8', 0x00, 'B', 0x00, '3', 0x00, 'E', 0x00, '-', 0x00, '1', 0x00, '2', 0x00, '7', 0x00, 'C', 0x00, 'A', 0x00, 
+'8', 0x00, 'A', 0x00, 'F', 0x00, 'F', 0x00, 'F', 0x00, '9', 0x00, 'D', 0x00, '}', 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
 typedef struct
 {
-	u32	dwDTERate;
-	u8	bCharFormat;
-	u8 	bParityType;
-	u8 	bDataBits;
-	u8	lineState;
+	uint32_t	dwDTERate;
+	uint8_t	bCharFormat;
+	uint8_t 	bParityType;
+	uint8_t 	bDataBits;
+	uint8_t	lineState;
 } LineInfo;
 
 static volatile LineInfo _usbLineInfo = { 57600, 0x00, 0x00, 0x00, 0x00 };
@@ -126,8 +173,9 @@ int WebUSB::getDescriptor(USBSetup& setup)
 
 uint8_t WebUSB::getShortName(char* name)
 {
-	memcpy(name, "WUART", 5);
-	return 5;
+	uint8_t len = strlen(shortName);
+	memcpy(name, shortName, len);
+	return len;
 }
 
 bool WebUSB::VendorControlRequest(USBSetup& setup)
@@ -135,7 +183,7 @@ bool WebUSB::VendorControlRequest(USBSetup& setup)
 	if (setup.bmRequestType == (REQUEST_DEVICETOHOST | REQUEST_VENDOR | REQUEST_DEVICE)) {
 		if (setup.bRequest == 0x01 && setup.wIndex == WEBUSB_REQUEST_GET_URL && landingPageUrl)
 		{
-                        if (setup.wValueL != 1)
+			if (setup.wValueL != 1)
 				return false;
 			uint8_t urlLength = strlen(landingPageUrl);
 			uint8_t descriptorLength = urlLength + 3;
@@ -154,7 +202,11 @@ bool WebUSB::VendorControlRequest(USBSetup& setup)
 				return false;
 			if (USB_SendControl(0, &pluggedInterface, 1) < 0)
 				return false;
-			return USB_SendControl(TRANSFER_PGM, &MS_OS_20_DESCRIPTOR_SUFFIX, sizeof(MS_OS_20_DESCRIPTOR_SUFFIX)) >= 0;
+			if (USB_SendControl(TRANSFER_PGM, &MS_OS_20_DESCRIPTOR_SUFFIX, sizeof(MS_OS_20_DESCRIPTOR_SUFFIX)) < 0)
+			        return false;
+			if (USB_SendControl(TRANSFER_PGM, &MS_OS_20_CUSTOM_PROPERTY, sizeof(MS_OS_20_CUSTOM_PROPERTY)) < 0)
+			        return false;
+			return true;
 		}
 	}
 	return false;
@@ -201,11 +253,12 @@ bool WebUSB::setup(USBSetup& setup)
 
 WebUSB::WebUSB(uint8_t landingPageScheme, const char* landingPageUrl)
 	: PluggableUSBModule(2, 1, epType),
-	  landingPageScheme(landingPageScheme), landingPageUrl(landingPageUrl)
+	  landingPageScheme(landingPageScheme), landingPageUrl(landingPageUrl),
+	  shortName(WEBUSB_SHORT_NAME)
 {
 	// one interface, 2 endpoints
-	epType[0] = EP_TYPE_BULK_OUT;
-	epType[1] = EP_TYPE_BULK_IN;
+	epType[0] = EP_TYPE_BULK_OUT_WEBUSB;
+	epType[1] = EP_TYPE_BULK_IN_WEBUSB;
 	PluggableUSB().plug(this);
 }
 
@@ -221,6 +274,11 @@ void WebUSB::begin(unsigned long /* baud_count */, byte /* config */)
 
 void WebUSB::end(void)
 {
+}
+
+void WebUSB::setShortName(const char* name)
+{
+	shortName = name;
 }
 
 int WebUSB::available(void)
@@ -305,9 +363,19 @@ WebUSB::operator bool() {
 unsigned long WebUSB::baud() {
 	// Disable interrupts while reading a multi-byte value
 	uint32_t baudrate;
+#ifdef ARDUINO_ARCH_SAMD
+	// nothing needed
+#else
+	// Disable IRQs while reading and clearing breakValue to make
+	// sure we don't overwrite a value just set by the ISR.
 	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+#endif
 		baudrate =  _usbLineInfo.dwDTERate;
+#ifdef ARDUINO_ARCH_SAMD
+	// nothing needed
+#else
 	}
+#endif
 	return baudrate;
 }
 
@@ -333,11 +401,27 @@ bool WebUSB::rts() {
 
 int32_t WebUSB::readBreak() {
 	int32_t ret;
+#ifdef ARDUINO_ARCH_SAMD
+	uint8_t enableInterrupts = ((__get_PRIMASK() & 0x1) == 0);
+
+	// disable interrupts,
+	// to avoid clearing a breakValue that might occur 
+	// while processing the current break value
+	__disable_irq();
+#else
 	// Disable IRQs while reading and clearing breakValue to make
 	// sure we don't overwrite a value just set by the ISR.
 	ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
+#endif
 		ret = breakValue;
 		breakValue = -1;
+#ifdef ARDUINO_ARCH_SAMD
+	if (enableInterrupts) {
+		// re-enable the interrupts
+		__enable_irq();
 	}
+#else
+	}
+#endif
 	return ret;
 }

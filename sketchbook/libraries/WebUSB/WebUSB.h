@@ -21,9 +21,13 @@
 
 #include <stdint.h>
 #include <Arduino.h>
+#ifdef ARDUINO_ARCH_SAMD
+#include "USB/PluggableUSB.h"
+#else
 #include "PluggableUSB.h"
 #include <avr/wdt.h>
 #include <util/atomic.h>
+#endif
 
 #ifndef USBCON
 #error "WebUSB requires a board that supports USB client device mode."
@@ -33,6 +37,12 @@
 #define WEBUSB_REQUEST_GET_URL			0x02
 
 #define MS_OS_20_REQUEST_DESCRIPTOR 0x07
+
+#ifndef WEBUSB_SHORT_NAME
+// Max length 20 (ISERIAL_MAX_LEN defined in USBDesc.h)
+#define WEBUSB_SHORT_NAME "WUART"
+#endif
+
 
 typedef struct
 {
@@ -44,10 +54,29 @@ typedef struct
 class WebUSB : public PluggableUSBModule, public Stream
 {
 public:
+	/*
+	 * Together |landingPageScheme| and |landingPageUrl| tell the browser
+	 * what page the user should visit in order to interact with their
+	 * device. |landingPageScheme| can have any of the following values:
+	 *
+	 *  0x00 -> "http://"
+	 *  0x01 -> "https://"
+	 *
+	 * This prefix is combined with |landingPageUrl| to produce the full
+	 * URL.
+	 */
 	WebUSB(uint8_t landingPageScheme, const char* landingPageUrl);
 	void begin(unsigned long);
 	void begin(unsigned long, uint8_t);
 	void end(void);
+	/*
+	 * Sets the string reported as the USB device serial number.
+	 * This should be called before |begin()|, typically in |setup()|.
+	 * |name| should be a pointer to static char array containing
+	 * a nul-terminated string containing at most 20 characters
+	 * (not counting the final nul character).
+	 */
+	void setShortName(const char* name);
 
 	virtual int available(void);
 	virtual int peek(void);
@@ -94,13 +123,18 @@ protected:
 private:
 	bool VendorControlRequest(USBSetup& setup);
 
+#ifdef ARDUINO_ARCH_SAMD
+	uint32_t epType[2];
+#else
 	uint8_t epType[2];
+#endif
 	uint16_t descriptorSize;
 	uint8_t protocol;
 	uint8_t idle;
 	int peek_buffer;
 	uint8_t landingPageScheme;
 	const char* landingPageUrl;
+	const char* shortName;
 };
 
 #endif // WebUSB_h
