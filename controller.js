@@ -157,8 +157,6 @@ export default class Controller {
         'index': 0x02
       })
     )
-
-    .catch(error => console.log(error))
   }
 
   /**

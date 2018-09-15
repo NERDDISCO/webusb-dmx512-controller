@@ -30,6 +30,10 @@ activateButton.addEventListener('click', e => {
       // Successfully created a connection to the device
       devConsole.logUsbDevice(controller.device)
     })
+    .catch((error) => {
+      devConsole.log('connect:', error, 'string')
+    })
+
   })
   .catch(() => {
     devConsole.log('No USB device was selected', '', 'string')
